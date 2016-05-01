@@ -1,0 +1,7 @@
+#!/bin/sh
+
+REPO_NAME=$(basename "$(git rev-parse --show-toplevel)")
+
+sed -i "s/cpp_project_template/${REPO_NAME}/g" ./*.txt ./*/*.txt ./*.md
+sed -i "s/cpp-project-template/${REPO_NAME}/g" ./*.txt ./*/*.txt ./*.md
+

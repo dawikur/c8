@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+./script/build || true
+
+while :; do
+  eval printf %.1s '-{1..'"${COLUMNS:-$(tput cols)}"\}; echo
+  echo ""
+  change=$(inotifywait -qre close_write,moved_to,create . )
+  change=$(echo "${change}" | cut -d' ' -f3)
+  ./script/build && ./script/run_tests
+done
