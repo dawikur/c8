@@ -66,7 +66,16 @@ class Operations {
       Operation(A, LD)   { M.I = O.nnn;                                },
       Operation(B, JP)   { M.PC = O.nnn + M.V[0];                      },
       Operation(C, RND)  { M.V[O.x] = random::get() & O.kk;            },
-      Operation(D, DRW)  { /* TODO */                                  },
+      Operation(D, DRW)  { M.VF = 0;
+                           Byte dst = M.V[O.x] + M.V[O.y]; // hmm, what and where is stride?
+                           for (auto p = 0; p < n; ++p) {
+                             Byte const byte = M.V[M.I + p];
+                             Byte const before = M.Display[dst + p];
+                             M.Display[dst + p] ^= byte;
+                             if (before != M.Display[dst + p]) {
+                               M.VF = 1;
+                             }
+                           }                                           },
       Switch   (E, kk,   {
         Case(0x9E, SKP,    if ( M.Keypad[M.V[O.x]]) { M.SP += 2; }     );
         Case(0xA1, SKNP,   if (!M.Keypad[M.V[O.x]]) { M.SP += 2; }     );
