@@ -1,0 +1,9 @@
+cmake_minimum_required(VERSION 2.8)
+
+set(PROJECT_EMULATOR_NAME ${PROJECT_NAME_STR})
+
+file(GLOB EMULATOR_SRC_FILES *.cpp)
+
+add_executable(${PROJECT_EMULATOR_NAME} ${EMULATOR_SRC_FILES})
+
+target_link_libraries(${PROJECT_EMULATOR_NAME} ${CMAKE_THREAD_LIBS_INIT})

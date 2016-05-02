@@ -1,6 +1,6 @@
-c8
+:8ball: c8
 ===
-> TODO: short desciption
+> Chip8 - emulator, debugger and compiler
 
 [![Linux Build Status](https://img.shields.io/travis/dawikur/c8/master.svg?
   label=linux&style=flat-square)](https://travis-ci.org/dawikur/c8)
