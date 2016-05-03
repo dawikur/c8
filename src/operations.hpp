@@ -68,7 +68,7 @@ class Operations {
       Operation(C, RND)  { M.V[O.x] = random::get() & O.kk;            },
       Operation(D, DRW)  { M.VF = 0;
                            Byte dst = M.V[O.x] + M.V[O.y]; // hmm, what and where is stride?
-                           for (auto p = 0; p < n; ++p) {
+                           for (auto p = 0; p < O.n; ++p) {
                              Byte const byte = M.V[M.I + p];
                              Byte const before = M.Display[dst + p];
                              M.Display[dst + p] ^= byte;
