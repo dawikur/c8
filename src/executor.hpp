@@ -9,21 +9,7 @@
 
 #include "memory.hpp"
 #include "opcode.hpp"
-
-class random {
- public:
-  static Byte get() {
-    static random r;
-    return r.distribution(r.generator);
-  }
-
- private:
-  random() : randomDevice{}, generator{randomDevice()}, distribution{} {}
-
-  std::random_device randomDevice;
-  std::mt19937 generator;
-  std::uniform_int_distribution<Byte> distribution;
-};
+#include "random.hpp"
 
 class Executor {
  public:
@@ -65,7 +51,7 @@ class Executor {
       Operation(9, SNE)  { if (M.V[O.x] != M.V[O.y]) { M.PC += 2; }    },
       Operation(A, LD)   { M.I = O.nnn;                                },
       Operation(B, JP)   { M.PC = O.nnn + M.V[0];                      },
-      Operation(C, RND)  { M.V[O.x] = random::get() & O.kk;            },
+      Operation(C, RND)  { M.V[O.x] = Random::get() & O.kk;            },
       Operation(D, DRW)  { M.VF = 0;
                            Byte dst = M.V[O.x] + M.V[O.y]; // hmm, what and where is stride?
                            for (auto p = 0; p < O.n; ++p) {
@@ -110,7 +96,6 @@ class Executor {
   }
 
  private:
-
   void (*lookupTable[16])(Opcode const, Memory&, bool &waitForKey);
 };
 

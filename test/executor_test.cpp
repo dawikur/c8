@@ -217,3 +217,39 @@ TEST_F(executor_test, 8_SHL_set_Vx_to_Vx_SHL_1_1) {
   ASSERT_EQ(0xE0, memory.V[8]);
   ASSERT_EQ(1, memory.VF);
 }
+
+TEST_F(executor_test, 9_SNE_skip_next_instruction_if_Vx_neq_Vy_true) {
+  execute(0x9450);
+
+  ASSERT_EQ(0x2, memory.PC);
+}
+
+TEST_F(executor_test, 9_SNE_skip_next_instruction_if_Vx_neq_Vy_false) {
+  execute(0x9440);
+
+  ASSERT_EQ(0x0, memory.PC);
+}
+
+TEST_F(executor_test, A_LD_set_I_to_nnn) {
+  execute(0xA123);
+
+  ASSERT_EQ(0x123, memory.I);
+}
+
+TEST_F(executor_test, B_jump_to_location_nnn_plus_V0) {
+  memory.V[0] = 5;
+
+  execute(0xB123);
+
+  ASSERT_EQ(0x128, memory.PC);
+}
+
+TEST_F(executor_test, C_set_Vx_to_random_byte_AND_kk) {
+  execute(0xC500);
+
+  ASSERT_EQ(0x0, memory.V[5]);
+}
+
+TEST_F(executor_test, D_DRW_display_n_byte_sprite_TODO) {}
+
+
