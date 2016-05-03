@@ -1,7 +1,7 @@
 // Copyright 2016 Dawid Kurek. All Rights Reserved.
 
-#ifndef SRC_OPERATIONS_HPP_
-#define SRC_OPERATIONS_HPP_
+#ifndef SRC_EXECUTOR_HPP_
+#define SRC_EXECUTOR_HPP_
 
 #include <cstddef>
 #include <cstring>
@@ -25,9 +25,9 @@ class random {
   std::uniform_int_distribution<Byte> distribution;
 };
 
-class Operations {
+class Executor {
  public:
-  Operations()
+  Executor()
     : lookupTable {
 
 #define Operation(id, name)  [](Opcode const O, Memory& M, bool& waitForKey)
@@ -99,6 +99,11 @@ class Operations {
 
     } {}
 
+  void operator()(Opcode const opcode, Memory &memory) {
+    bool dummy;
+    (*this)(opcode, memory, dummy);
+  }
+
   void operator()(Opcode const opcode, Memory &memory, bool &waitForKey) {
     waitForKey = false;
     lookupTable[opcode.id](opcode, memory, waitForKey);
@@ -109,4 +114,4 @@ class Operations {
   void (*lookupTable[16])(Opcode const, Memory&, bool &waitForKey);
 };
 
-#endif  // SRC_OPERATIONS_HPP_
+#endif  // SRC_EXECUTOR_HPP_

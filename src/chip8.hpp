@@ -5,14 +5,14 @@
 
 #include "memory.hpp"
 #include "opcode.hpp"
-#include "operations.hpp"
+#include "executor.hpp"
 
 class Chip8 {
  public:
   Chip8();
 
   void execute(bool &waitForKey) {
-    operations(command, memory, waitForKey);
+    do_execute(command, memory, waitForKey);
   }
 
   void setKey(Byte const key) {
@@ -22,7 +22,7 @@ class Chip8 {
  private:
   Memory memory;
   Opcode command;
-  Operations operations;
+  Executor do_execute;
 };
 
 #endif  // SRC_CHIP8_HPP_
