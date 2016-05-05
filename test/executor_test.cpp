@@ -250,6 +250,34 @@ TEST_F(executor_test, C_set_Vx_to_random_byte_AND_kk) {
   ASSERT_EQ(0x0, memory.V[5]);
 }
 
-TEST_F(executor_test, D_DRW_display_n_byte_sprite_TODO) {}
+TEST_F(executor_test, D_DRW_display_n_byte_sprite_TODO) {
+  EXPECT_TRUE(false);
+}
 
+TEST_F(executor_test, E_skip_next_instruction_if_key_with_value_f_Vx_is_pressed_false) {
+  execute(0xE59E);
 
+  EXPECT_EQ(0, memory.PC);
+}
+
+TEST_F(executor_test, E_skip_next_instruction_if_key_with_value_f_Vx_is_pressed_true) {
+  memory.Keypad[5] = 1;
+
+  execute(0xE59E);
+
+  EXPECT_EQ(2, memory.PC);
+}
+
+TEST_F(executor_test, E_skip_next_instruction_if_key_with_value_f_Vx_is_not_pressed_false) {
+  memory.Keypad[5] = 1;
+
+  execute(0xE5A1);
+
+  EXPECT_EQ(0, memory.PC);
+}
+
+TEST_F(executor_test, E_skip_next_instruction_if_key_with_value_f_Vx_is_not_pressed_true) {
+  execute(0xE5A1);
+
+  EXPECT_EQ(2, memory.PC);
+}

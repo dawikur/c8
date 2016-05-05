@@ -63,8 +63,8 @@ class Executor {
                              }
                            }                                           },
       Switch   (E, kk,   {
-        Case(0x9E, SKP,    if ( M.Keypad[M.V[O.x]]) { M.SP += 2; }     );
-        Case(0xA1, SKNP,   if (!M.Keypad[M.V[O.x]]) { M.SP += 2; }     );
+        Case(0x9E, SKP,    if ( M.Keypad[M.V[O.x]]) { M.PC += 2; }     );
+        Case(0xA1, SKNP,   if (!M.Keypad[M.V[O.x]]) { M.PC += 2; }     );
       }),
       Switch   (F, kk,   {
         Case(0x07, LD,     M.V[O.x] = M.DT                             );
