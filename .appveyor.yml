@@ -1,0 +1,35 @@
+
+version: 0.1.{build}
+
+branches:
+  only:
+  - master
+
+os:
+  - Visual Studio 2015
+
+platform:
+  - x86
+  - x64
+
+configuration:
+  - Release
+
+environment:
+  BOOST_ROOT: C:\Libraries\boost_1_59_0
+
+install:
+  - cmd: 'git submodule update --init --recursive'
+
+before_build:
+  - cmd: script\generate_solution.bat
+
+build_script:
+  - cmd: script\build.bat
+
+test_script:
+  - cmd: script\run_tests.bat
+
+artifacts:
+  - path: build\test\htl_test.exe
+
