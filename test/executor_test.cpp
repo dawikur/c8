@@ -251,6 +251,8 @@ TEST_F(executor_test, C_RND_set_Vx_to_random_byte_AND_kk) {
 }
 
 TEST_F(executor_test, D_DRW_display_n_byte_sprite_TODO) {
+  execute(0xD58A);
+
   EXPECT_TRUE(false);
 }
 
@@ -291,6 +293,8 @@ TEST_F(executor_test, F_LD_set_Vx_to_delay_timer_value) {
 }
 
 TEST_F(executor_test, F_LD_wait_for_a_key_press_store_the_value_of_the_key_in_Vx) {
+  execute(0xF20A);
+
   EXPECT_TRUE(false);
 }
 
@@ -317,5 +321,29 @@ TEST_F(executor_test, F_ADD_set_I_to_I_add_Vx) {
   execute(0xF31E);
 
   EXPECT_EQ(7, memory.I);
+}
+
+TEST_F(executor_test, F_LD_set_I_to_location_of_sprite_for_digit_Vx) {
+  execute(0xFB29);
+
+  EXPECT_TRUE(false);
+}
+
+TEST_F(executor_test, F_LD_store_BCD_representation_of_Vx_in_memory_location_I) {
+  execute(0xF933);
+
+  EXPECT_TRUE(false);
+}
+
+TEST_F(executor_test, F_LD_store_registers_V0_through_Vx_in_memory_starting_at_location_I) {
+  execute(0xFB55);
+
+  EXPECT_TRUE(false);
+}
+
+TEST_F(executor_test, F_LD_read_registers_Vo_throu_Vx_from_memory_starting_at_location_I) {
+  execute(0xFE65);
+
+  EXPECT_TRUE(false);
 }
 
