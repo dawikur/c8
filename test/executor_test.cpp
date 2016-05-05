@@ -326,7 +326,7 @@ TEST_F(executor_test, F_ADD_set_I_to_I_add_Vx) {
 TEST_F(executor_test, F_LD_set_I_to_location_of_sprite_for_digit_Vx) {
   execute(0xFB29);
 
-  EXPECT_TRUE(false);
+  EXPECT_EQ((&memory.Keypad[0xB * 5] - &memory.Raw[0]), memory.I);
 }
 
 TEST_F(executor_test, F_LD_store_BCD_representation_of_Vx_in_memory_location_I) {
