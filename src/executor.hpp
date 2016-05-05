@@ -73,10 +73,15 @@ class Executor {
         Case(0x18, LD,     M.ST = M.V[O.x]                             );
         Case(0x1E, ADD,    M.I = M.I + M.V[O.x]                        );
         Case(0x29, LD,     M.I = offsetof(Memory, Keypad) + (O.x * 5)  );
-        Case(0x33, LD,   { auto const Vx = M.V[O.x];
-                           M.Raw[M.I+0] = (Vx / 10) % 10;
-                           M.Raw[M.I+1] = (Vx / 10) % 10;
-                           M.Raw[M.I+2] = (Vx / 1 ) % 10; }            );
+        Case(0x33, LD,   { M.Raw[M.I+0] = (M.V[O.x] / 100) % 10;
+                           M.Raw[M.I+1] = (M.V[O.x] /  10) % 10;
+                           M.Raw[M.I+2] = (M.V[O.x] /   1) % 10; }     );
+        Case(0x55, LD,   { for (int i = 0; i <= O.x; ++i) {
+                             M.Raw[M.I+i] = M.V[i];
+                           } }                                         );
+        Case(0x65, LD,   { for (int i = 0; i <= O.x; ++i) {
+                             M.V[i] = M.Raw[M.I+i];
+                           } }                                         );
       })
 
 #undef Case

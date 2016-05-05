@@ -330,20 +330,45 @@ TEST_F(executor_test, F_LD_set_I_to_location_of_sprite_for_digit_Vx) {
 }
 
 TEST_F(executor_test, F_LD_store_BCD_representation_of_Vx_in_memory_location_I) {
+  memory.I = 119;
+  memory.V[9] = 234;
+
   execute(0xF933);
 
-  EXPECT_TRUE(false);
+  EXPECT_EQ(2, memory.Raw[119]);
+  EXPECT_EQ(3, memory.Raw[120]);
+  EXPECT_EQ(4, memory.Raw[121]);
 }
 
 TEST_F(executor_test, F_LD_store_registers_V0_through_Vx_in_memory_starting_at_location_I) {
-  execute(0xFB55);
+  memory.I = 123;
 
-  EXPECT_TRUE(false);
+  execute(0xF355);
+
+  EXPECT_EQ(0x0, memory.Raw[123]);
+  EXPECT_EQ(0x1, memory.Raw[124]);
+  EXPECT_EQ(0x2, memory.Raw[125]);
+  EXPECT_EQ(0x3, memory.Raw[126]);
+
+  EXPECT_EQ(0x0, memory.Raw[127]);
 }
 
-TEST_F(executor_test, F_LD_read_registers_Vo_throu_Vx_from_memory_starting_at_location_I) {
-  execute(0xFE65);
+TEST_F(executor_test, F_LD_read_registers_V0_throu_Vx_from_memory_starting_at_location_I) {
+  memory.I = 102;
+  memory.Raw[102] = 5;
+  memory.Raw[103] = 4;
+  memory.Raw[104] = 6;
+  memory.Raw[105] = 3;
+  memory.Raw[106] = 7;
 
-  EXPECT_TRUE(false);
+  execute(0xF465);
+
+  EXPECT_EQ(5, memory.V[0]);
+  EXPECT_EQ(4, memory.V[1]);
+  EXPECT_EQ(6, memory.V[2]);
+  EXPECT_EQ(3, memory.V[3]);
+  EXPECT_EQ(7, memory.V[4]);
+
+  EXPECT_EQ(5, memory.V[5]);
 }
 
