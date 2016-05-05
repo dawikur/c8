@@ -236,7 +236,7 @@ TEST_F(executor_test, A_LD_set_I_to_nnn) {
   ASSERT_EQ(0x123, memory.I);
 }
 
-TEST_F(executor_test, B_jump_to_location_nnn_plus_V0) {
+TEST_F(executor_test, B_JP_jump_to_location_nnn_plus_V0) {
   memory.V[0] = 5;
 
   execute(0xB123);
@@ -244,7 +244,7 @@ TEST_F(executor_test, B_jump_to_location_nnn_plus_V0) {
   ASSERT_EQ(0x128, memory.PC);
 }
 
-TEST_F(executor_test, C_set_Vx_to_random_byte_AND_kk) {
+TEST_F(executor_test, C_RND_set_Vx_to_random_byte_AND_kk) {
   execute(0xC500);
 
   ASSERT_EQ(0x0, memory.V[5]);
@@ -254,13 +254,13 @@ TEST_F(executor_test, D_DRW_display_n_byte_sprite_TODO) {
   EXPECT_TRUE(false);
 }
 
-TEST_F(executor_test, E_skip_next_instruction_if_key_with_value_f_Vx_is_pressed_false) {
+TEST_F(executor_test, E_SKP_skip_next_instruction_if_key_with_value_f_Vx_is_pressed_false) {
   execute(0xE59E);
 
   EXPECT_EQ(0, memory.PC);
 }
 
-TEST_F(executor_test, E_skip_next_instruction_if_key_with_value_f_Vx_is_pressed_true) {
+TEST_F(executor_test, E_SKP_skip_next_instruction_if_key_with_value_f_Vx_is_pressed_true) {
   memory.Keypad[5] = 1;
 
   execute(0xE59E);
@@ -268,7 +268,7 @@ TEST_F(executor_test, E_skip_next_instruction_if_key_with_value_f_Vx_is_pressed_
   EXPECT_EQ(2, memory.PC);
 }
 
-TEST_F(executor_test, E_skip_next_instruction_if_key_with_value_f_Vx_is_not_pressed_false) {
+TEST_F(executor_test, E_SKNP_skip_next_instruction_if_key_with_value_f_Vx_is_not_pressed_false) {
   memory.Keypad[5] = 1;
 
   execute(0xE5A1);
@@ -276,8 +276,46 @@ TEST_F(executor_test, E_skip_next_instruction_if_key_with_value_f_Vx_is_not_pres
   EXPECT_EQ(0, memory.PC);
 }
 
-TEST_F(executor_test, E_skip_next_instruction_if_key_with_value_f_Vx_is_not_pressed_true) {
+TEST_F(executor_test, E_SKNP_skip_next_instruction_if_key_with_value_f_Vx_is_not_pressed_true) {
   execute(0xE5A1);
 
   EXPECT_EQ(2, memory.PC);
 }
+
+TEST_F(executor_test, F_LD_set_Vx_to_delay_timer_value) {
+  memory.DT = 0xA;
+
+  execute(0xFE07);
+
+  EXPECT_EQ(0xA, memory.V[0xE]);
+}
+
+TEST_F(executor_test, F_LD_wait_for_a_key_press_store_the_value_of_the_key_in_Vx) {
+  EXPECT_TRUE(false);
+}
+
+TEST_F(executor_test, F_LD_set_delay_timer_to_Vx) {
+  memory.V[7] = 0xB;
+
+  execute(0xF715);
+
+  EXPECT_EQ(0xB, memory.DT);
+}
+
+TEST_F(executor_test, F_LD_set_sound_timer_to_Vx) {
+  memory.V[7] = 0xB;
+
+  execute(0xF718);
+
+  EXPECT_EQ(0xB, memory.ST);
+}
+
+TEST_F(executor_test, F_ADD_set_I_to_I_add_Vx) {
+  memory.I = 2;
+  memory.V[3] = 5;
+
+  execute(0xF31E);
+
+  EXPECT_EQ(7, memory.I);
+}
+

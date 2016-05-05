@@ -11,8 +11,8 @@ class Chip8 {
  public:
   Chip8();
 
-  void execute(bool &waitForKey) {
-    do_execute(command, memory, waitForKey);
+  void execute() {
+    do_execute(command, memory);
   }
 
   void setKey(Byte const key) {

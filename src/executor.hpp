@@ -16,7 +16,7 @@ class Executor {
   Executor()
     : lookupTable {
 
-#define Operation(id, name)  [](Opcode const O, Memory& M, bool& waitForKey)
+#define Operation(id, name)  [](Opcode const O, Memory& M)
 #define Switch(id, ww, body) Operation(id, id) { switch (O. ww ) { body } }
 #define Case(cc, name, body) case cc : { body ; } ; break
 
@@ -68,7 +68,7 @@ class Executor {
       }),
       Switch   (F, kk,   {
         Case(0x07, LD,     M.V[O.x] = M.DT                             );
-        Case(0x0A, LD,     waitForKey = true;                          );
+        Case(0x0A, LD,                      ;                          );
         Case(0x15, LD,     M.DT = M.V[O.x]                             );
         Case(0x18, LD,     M.ST = M.V[O.x]                             );
         Case(0x1E, ADD,    M.I = M.I + M.V[O.x]                        );
@@ -86,17 +86,11 @@ class Executor {
     } {}
 
   void operator()(Opcode const opcode, Memory &memory) {
-    bool dummy;
-    (*this)(opcode, memory, dummy);
-  }
-
-  void operator()(Opcode const opcode, Memory &memory, bool &waitForKey) {
-    waitForKey = false;
-    lookupTable[opcode.id](opcode, memory, waitForKey);
+    lookupTable[opcode.id](opcode, memory);
   }
 
  private:
-  void (*lookupTable[16])(Opcode const, Memory&, bool &waitForKey);
+  void (*lookupTable[16])(Opcode const, Memory&);
 };
 
 #endif  // SRC_EXECUTOR_HPP_
