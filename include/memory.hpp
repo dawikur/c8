@@ -1,7 +1,7 @@
 // Copyright 2016 Dawid Kurek. All Rights Reserved.
 
-#ifndef SRC_MEMORY_HPP_
-#define SRC_MEMORY_HPP_
+#ifndef INCLUDE_MEMORY_HPP_
+#define INCLUDE_MEMORY_HPP_
 
 #include "type.hpp"
 
@@ -22,5 +22,5 @@ union Memory {
   };
 };
 
-#endif  // SRC_MEMORY_HPP_
+#endif  // INCLUDE_MEMORY_HPP_
 

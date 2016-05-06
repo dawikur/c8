@@ -1,6 +1,6 @@
 // Copyright 2016, Dawid Kurek, dawikur@gmail.com
 
-#include "../src/opcode.hpp"
+#include "opcode.hpp"
 
 #include "gtest/gtest.h"
 

@@ -2,7 +2,7 @@
 
 #include <type_traits>
 
-#include "../src/executor.hpp"
+#include "executor.hpp"
 
 #include "gtest/gtest.h"
 

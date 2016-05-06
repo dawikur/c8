@@ -2,7 +2,7 @@
 
 #include <type_traits>
 
-#include "../src/memory.hpp"
+#include "memory.hpp"
 
 #include "gtest/gtest.h"
 

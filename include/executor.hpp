@@ -1,7 +1,7 @@
 // Copyright 2016 Dawid Kurek. All Rights Reserved.
 
-#ifndef SRC_EXECUTOR_HPP_
-#define SRC_EXECUTOR_HPP_
+#ifndef INCLUDE_EXECUTOR_HPP_
+#define INCLUDE_EXECUTOR_HPP_
 
 #include <cstddef>
 #include <cstring>
@@ -98,4 +98,4 @@ class Executor {
   void (*lookupTable[16])(Opcode const, Memory&);
 };
 
-#endif  // SRC_EXECUTOR_HPP_
+#endif  // INCLUDE_EXECUTOR_HPP_

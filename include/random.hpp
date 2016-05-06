@@ -1,7 +1,7 @@
 // Copyright 2016 Dawid Kurek. All Rights Reserved.
 
-#ifndef SRC_RANDOM_HPP_
-#define SRC_RANDOM_HPP_
+#ifndef INCLUDE_RANDOM_HPP_
+#define INCLUDE_RANDOM_HPP_
 
 #include <random>
 
@@ -22,4 +22,4 @@ class Random {
   std::uniform_int_distribution<Byte> distribution;
 };
 
-#endif  // SRC_RANDOM_HPP_
+#endif  // INCLUDE_RANDOM_HPP_

@@ -1,11 +1,11 @@
 // Copyright 2016 Dawid Kurek. All Rights Reserved.
 
-#ifndef SRC_CHIP8_HPP_
-#define SRC_CHIP8_HPP_
+#ifndef INCLUDE_CHIP8_HPP_
+#define INCLUDE_CHIP8_HPP_
 
+#include "executor.hpp"
 #include "memory.hpp"
 #include "opcode.hpp"
-#include "executor.hpp"
 
 class Chip8 {
  public:
@@ -25,4 +25,4 @@ class Chip8 {
   Executor do_execute;
 };
 
-#endif  // SRC_CHIP8_HPP_
+#endif  // INCLUDE_CHIP8_HPP_

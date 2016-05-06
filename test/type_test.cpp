@@ -1,6 +1,6 @@
 // Copyright 2016, Dawid Kurek, dawikur@gmail.com
 
-#include "../src/type.hpp"
+#include "type.hpp"
 
 #include "gtest/gtest.h"
 
