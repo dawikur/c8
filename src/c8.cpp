@@ -1,16 +1,11 @@
 // Copyright 2016 Dawid Kurek. All Rights Reserved.
 
-
-#include <stdexcept>
-#include <memory>
-#include <vector>
-
-#include <nana/gui/wvl.hpp>
+#include "c8form.hpp"
 
 int main(void) {
-  nana::form form;
-  form.show();
-  nana::exec();
+  c8form c8;
+
+  c8.exec();
 
   return 0;
 }
