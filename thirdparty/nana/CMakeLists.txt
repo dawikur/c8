@@ -14,8 +14,8 @@ ExternalProject_Add(nana
   INSTALL_COMMAND ""                                                           # disable installing
 )
 
-ExternalProject_Get_Property(nana source_dir)                            # Specify include dir
-set(NANA_INCLUDE_DIRS ${source_dir}/nana/include PARENT_SCOPE)
+ExternalProject_Get_Property(nana source_dir)                                  # Specify include dir
+set(NANA_INCLUDE_DIRS ${source_dir}/include PARENT_SCOPE)
 
-ExternalProject_Get_Property(nana binary_dir)                            # Specify MainTest's link libraries
-set(NANA_LIBS_DIR ${binary_dir}/nana/extrlib PARENT_SCOPE)
+ExternalProject_Get_Property(nana binary_dir)                                  # Specify MainTest's link libraries
+set(NANA_LIBS_DIR ${binary_dir} PARENT_SCOPE)
