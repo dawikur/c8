@@ -2,10 +2,13 @@
 
 #include "c8form.hpp"
 
+#include <string>
+
 #include <nana/gui/filebox.hpp>
 #include <nana/gui/wvl.hpp>
 
-c8form::c8form() : nana::form{}, menubar{*this} {
+C8form::C8form()
+  : nana::form{}, fileChoosenCallback{[](std::string const &) {}}, menubar{*this} {
   caption("c8");
 
   bgcolor(nana::colors::white);
@@ -14,12 +17,16 @@ c8form::c8form() : nana::form{}, menubar{*this} {
   createMenubar();
 }
 
-void c8form::exec() {
+void C8form::exec() {
   show();
   nana::exec();
 }
 
-void c8form::createMenubar() {
+void C8form::fileChoosen(FileChoosen const &callback) {
+  fileChoosenCallback = callback;
+}
+
+void C8form::createMenubar() {
   auto& fileMenu = menubar.push_back("File");
   fileMenu.append("Open", [this](nana::menu::item_proxy&) {
       nana::filebox filebox{*this, true};
@@ -27,7 +34,9 @@ void c8form::createMenubar() {
       filebox.add_filter("c8rom File", "*.c8rom");
       filebox.add_filter("All Files", "*.*");
 
-      filebox();
+      if (filebox()) {
+        fileChoosenCallback(filebox.file());
+      }
   });
   fileMenu.append_splitter();
   fileMenu.append("Exit", [](nana::menu::item_proxy&) {

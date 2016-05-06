@@ -3,6 +3,10 @@
 #ifndef INCLUDE_CHIP8_HPP_
 #define INCLUDE_CHIP8_HPP_
 
+#include <atomic>
+#include <string>
+#include <thread>
+
 #include "executor.hpp"
 #include "memory.hpp"
 #include "opcode.hpp"
@@ -10,19 +14,23 @@
 class Chip8 {
  public:
   Chip8();
+  ~Chip8();
 
-  void execute() {
-    do_execute(command, memory);
-  }
+  void load(std::string const &file);
 
-  void setKey(Byte const key) {
-    memory.V[command.x] = key;
-  }
+  void run();
 
  private:
+  void start();
+  void stop();
+  void main();
+
   Memory memory;
   Opcode command;
-  Executor do_execute;
+  Executor execute;
+
+  std::atomic_bool running;
+  std::thread worker;
 };
 
 #endif  // INCLUDE_CHIP8_HPP_
