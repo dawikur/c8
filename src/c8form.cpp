@@ -20,8 +20,8 @@ void c8form::exec() {
 }
 
 void c8form::createMenubar() {
-  auto& fileMenu = menubar.push_back("&File");
-  fileMenu.append("&Open", [this](nana::menu::item_proxy&) {
+  auto& fileMenu = menubar.push_back("File");
+  fileMenu.append("Open", [this](nana::menu::item_proxy&) {
       nana::filebox filebox{*this, true};
       filebox.add_filter("Rom File", "*.rom");
       filebox.add_filter("c8rom File", "*.c8rom");
@@ -30,13 +30,14 @@ void c8form::createMenubar() {
       filebox();
   });
   fileMenu.append_splitter();
-  fileMenu.append("&Exit", [](nana::menu::item_proxy&) {
+  fileMenu.append("Exit", [](nana::menu::item_proxy&) {
       nana::API::exit();
   });
 
-  menubar.push_back("&View");
-  auto& helpMenu = menubar.push_back("&Help");
-  helpMenu.append("&About",
+  auto& viewMenu = menubar.push_back("View");
+
+  auto& helpMenu = menubar.push_back("Help");
+  helpMenu.append("About",
                   [this](nana::menu::item_proxy &) {
                     auto msgbox = nana::msgbox{*this, "About c8"}.icon(
                       nana::msgbox::icon_information);
