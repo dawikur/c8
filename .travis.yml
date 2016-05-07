@@ -5,16 +5,16 @@ language: cpp
 addons_shortcuts:
   addons_clang38: &clang38
     apt:
-      sources: [ 'ubuntu-toolchain-r-test', 'llvm-toolchain-precise', 'llvm-toolchain-precise-3.8' ]
-      packages: [ 'clang-3.8' ]
+      sources: [ 'george-edison55-precise-backports','ubuntu-toolchain-r-test', 'llvm-toolchain-precise', 'llvm-toolchain-precise-3.8' ]
+      packages: [ 'cmake', 'cmake-data', 'clang-3.8' ]
   addons_gcc49: &gcc49
     apt:
-      sources: [ 'ubuntu-toolchain-r-test' ]
-      packages: [ 'g++-4.9' ]
+      sources: [ 'george-edison55-precise-backports','ubuntu-toolchain-r-test' ]
+      packages: [ 'cmake', 'cmake-data', 'g++-4.9' ]
   addons_gcc50: &gcc50
     apt:
-      sources: [ 'ubuntu-toolchain-r-test' ]
-      packages: [ 'g++-5' ]
+      sources: [ 'george-edison55-precise-backports', 'ubuntu-toolchain-r-test' ]
+      packages: [ 'cmake', 'cmake-data', 'g++-5' ]
 
 matrix:
   include:
