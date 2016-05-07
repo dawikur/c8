@@ -39,5 +39,6 @@ matrix:
       after_success: coveralls --gcov gcov-5 --gcov-options '\-lp' --include source
 
 script:
+  - cmake --version
   - ./script/build &&
     ./script/run_tests
