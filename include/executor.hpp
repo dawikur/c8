@@ -5,18 +5,22 @@
 
 #include <cstddef>
 #include <cstring>
+#include <functional>
 #include <random>
 
 #include "memory.hpp"
 #include "opcode.hpp"
 #include "random.hpp"
+#include "type.hpp"
 
 class Executor {
  public:
+  using GetKey = std::function<Byte ()>;
+
   Executor()
     : lookupTable {
 
-#define Operation(id, name)  [](Opcode const O, Memory& M)
+#define Operation(id, name)  [](Opcode const O, Memory& M, GetKey const& getKey)
 #define Switch(id, ww, body) Operation(id, id) { switch (O. ww ) { body } }
 #define Case(cc, name, body) case cc : { body ; } ; break
 
@@ -68,7 +72,7 @@ class Executor {
       }),
       Switch   (F, kk,   {
         Case(0x07, LD,     M.V[O.x] = M.DT                             );
-        Case(0x0A, LD,                      ;                          );
+        Case(0x0A, LD,     M.V[O.x] = getKey();                        );
         Case(0x15, LD,     M.DT = M.V[O.x]                             );
         Case(0x18, LD,     M.ST = M.V[O.x]                             );
         Case(0x1E, ADD,    M.I = M.I + M.V[O.x]                        );
@@ -90,12 +94,12 @@ class Executor {
 
     } {}
 
-  void operator()(Opcode const opcode, Memory &memory) {
-    lookupTable[opcode.id](opcode, memory);
+  void operator()(Opcode const opcode, Memory &memory, GetKey const& getKey) {
+    lookupTable[opcode.id](opcode, memory, getKey);
   }
 
  private:
-  void (*lookupTable[16])(Opcode const, Memory&);
+  void (*lookupTable[16])(Opcode const, Memory&, GetKey const&);
 };
 
 #endif  // INCLUDE_EXECUTOR_HPP_

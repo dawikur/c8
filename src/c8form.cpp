@@ -44,6 +44,7 @@ void C8form::createMenubar() {
   });
 
   auto& viewMenu = menubar.push_back("View");
+  viewMenu.append("Debug");
 
   auto& helpMenu = menubar.push_back("Help");
   helpMenu.append("About",

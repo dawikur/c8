@@ -13,12 +13,13 @@
 
 class Chip8 {
  public:
+  using GetKey = Executor::GetKey;
+
   explicit Chip8(Byte const &clock = 60);
   ~Chip8();
 
   void load(std::string const &file);
-
-  void run();
+  void getKey(GetKey const &callback);
 
  private:
   void start();
@@ -34,6 +35,7 @@ class Chip8 {
   Memory memory;
   Opcode command;
   Executor execute;
+  GetKey getKeyCallback;
 
   std::atomic_bool running;
   std::thread worker;

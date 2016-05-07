@@ -8,6 +8,7 @@
 
 class executor_test : public ::testing::Test {
  protected:
+  executor_test() : getKey{[this]() { return inputKey; }} {}
   void SetUp() override {
     memset(memory.Raw, 0, sizeof (memory.Raw));
 
@@ -17,11 +18,13 @@ class executor_test : public ::testing::Test {
   }
 
   void execute(Word const word) {
-    do_execute(Opcode{word}, memory);
+    do_execute(Opcode{word}, memory, getKey);
   }
 
   Executor do_execute;
   Memory memory;
+  Executor::GetKey getKey;
+  Byte inputKey;
 };
 
 TEST_F(executor_test, 0_CLS_clear_the_display) {
@@ -293,9 +296,11 @@ TEST_F(executor_test, F_LD_set_Vx_to_delay_timer_value) {
 }
 
 TEST_F(executor_test, F_LD_wait_for_a_key_press_store_the_value_of_the_key_in_Vx) {
+  inputKey = 0x5;
+
   execute(0xF20A);
 
-  EXPECT_TRUE(false);
+  EXPECT_EQ(0x5, memory.V[0x2]);
 }
 
 TEST_F(executor_test, F_LD_set_delay_timer_to_Vx) {

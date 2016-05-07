@@ -25,6 +25,8 @@ Chip8::~Chip8() {
 }
 
 void Chip8::load(std::string const &file) {
+  stop();
+
   size_t position = 0x200;
   for (std::ifstream input{file, std::ios::binary}; input.good();) {
     if (position > 0x1000) {
@@ -35,12 +37,11 @@ void Chip8::load(std::string const &file) {
     memory.Raw[position++] = input.get();
   }
 
-  run();
+  start();
 }
 
-void Chip8::run() {
-  stop();
-  start();
+void Chip8::getKey(GetKey const &callback) {
+  getKeyCallback = callback;
 }
 
 void Chip8::start() {
@@ -58,7 +59,7 @@ void Chip8::stop() {
 
 void Chip8::main() {
   while (running) {
-    execute(command, memory);
+    execute(command, memory, getKeyCallback);
     tick();
     wait();
   }

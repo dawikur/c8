@@ -9,9 +9,9 @@
 int main(int argc, char *argv[]) {
   try {
     Chip8 chip8;
-
     C8form form;
 
+    //chip8.getKey();
     form.fileChoosen([&chip8](std::string const &file) { chip8.load(file); });
 
     if (argc > 1) {
