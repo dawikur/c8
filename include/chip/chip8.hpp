@@ -1,7 +1,7 @@
 // Copyright 2016 Dawid Kurek. All Rights Reserved.
 
-#ifndef INCLUDE_CHIP8_HPP_
-#define INCLUDE_CHIP8_HPP_
+#ifndef INCLUDE_CHIP_CHIP8_HPP_
+#define INCLUDE_CHIP_CHIP8_HPP_
 
 #include <atomic>
 #include <string>
@@ -10,6 +10,8 @@
 #include "executor.hpp"
 #include "memory.hpp"
 #include "opcode.hpp"
+
+namespace chip {
 
 class Chip8 {
  public:
@@ -41,4 +43,6 @@ class Chip8 {
   std::thread worker;
 };
 
-#endif  // INCLUDE_CHIP8_HPP_
+}  // namespace chip
+
+#endif  // INCLUDE_CHIP_CHIP8_HPP_

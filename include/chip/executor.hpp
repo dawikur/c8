@@ -1,7 +1,7 @@
 // Copyright 2016 Dawid Kurek. All Rights Reserved.
 
-#ifndef INCLUDE_EXECUTOR_HPP_
-#define INCLUDE_EXECUTOR_HPP_
+#ifndef INCLUDE_CHIP_EXECUTOR_HPP_
+#define INCLUDE_CHIP_EXECUTOR_HPP_
 
 #include <cstddef>
 #include <cstring>
@@ -12,6 +12,8 @@
 #include "opcode.hpp"
 #include "random.hpp"
 #include "type.hpp"
+
+namespace chip {
 
 class Executor {
  public:
@@ -102,4 +104,6 @@ class Executor {
   void (*lookupTable[16])(Opcode const, Memory&, GetKey const&);
 };
 
-#endif  // INCLUDE_EXECUTOR_HPP_
+}  // namespace chip
+
+#endif  // INCLUDE_CHIP_EXECUTOR_HPP_

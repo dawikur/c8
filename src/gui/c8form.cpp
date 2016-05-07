@@ -1,17 +1,17 @@
 // Copyright 2016 Dawid Kurek. All Rights Reserved.
 
-#include "c8form.hpp"
+#include "gui/c8form.hpp"
 
 #include <string>
 
 #include <nana/gui/filebox.hpp>
 
+namespace gui {
+
 C8form::C8form()
   : nana::form{}, drawer{*this}, menubar{*this}, fileChoosenCallback{[](std::string const &) {}} {
   caption("c8");
-
   bgcolor(nana::colors::white);
-  menubar.bgcolor(nana::colors::white);
 
   createMenubar();
 
@@ -21,9 +21,7 @@ C8form::C8form()
 }
 
 void C8form::exec() {
-  drawer.update();
   show();
-  drawer.update();
   nana::exec();
 }
 
@@ -32,6 +30,8 @@ void C8form::fileChoosen(FileChoosen const &callback) {
 }
 
 void C8form::createMenubar() {
+  menubar.bgcolor(nana::colors::white);
+
   auto& fileMenu = menubar.push_back("File");
   fileMenu.append("Open", [this](nana::menu::item_proxy&) {
       nana::filebox filebox{*this, true};
@@ -61,3 +61,4 @@ void C8form::createMenubar() {
                   });
 }
 
+}  // namespace gui

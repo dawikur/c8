@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 
 set(PROJECT_EMULATOR_NAME ${PROJECT_NAME_STR})
 
-file(GLOB EMULATOR_SRC_FILES *.cpp)
+file(GLOB EMULATOR_SRC_FILES *.cpp */*.cpp)
 
 include_directories(${NANA_INCLUDE_DIRS})
 

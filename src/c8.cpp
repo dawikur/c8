@@ -3,13 +3,13 @@
 #include <iostream>
 #include <string>
 
-#include "c8form.hpp"
-#include "chip8.hpp"
+#include "chip/chip8.hpp"
+#include "gui/c8form.hpp"
 
 int main(int argc, char *argv[]) {
   try {
-    Chip8 chip8;
-    C8form form;
+    chip::Chip8 chip8;
+    gui::C8form form;
 
     //chip8.getKey();
     form.fileChoosen([&chip8](std::string const &file) { chip8.load(file); });

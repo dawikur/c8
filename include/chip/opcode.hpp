@@ -1,9 +1,11 @@
 // Copyright 2016 Dawid Kurek. All Rights Reserved.
 
-#ifndef INCLUDE_OPCODE_HPP_
-#define INCLUDE_OPCODE_HPP_
+#ifndef INCLUDE_CHIP_OPCODE_HPP_
+#define INCLUDE_CHIP_OPCODE_HPP_
 
 #include "type.hpp"
+
+namespace chip {
 
 struct Opcode {
   Opcode() : Opcode(0x00) {}
@@ -22,4 +24,6 @@ struct Opcode {
   Byte id, x, y, n, kk;
 };
 
-#endif  // INCLUDE_OPCODE_HPP_
+}  // namespace chip
+
+#endif  // INCLUDE_CHIP_OPCODE_HPP_

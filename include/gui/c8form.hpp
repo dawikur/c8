@@ -1,7 +1,7 @@
 // Copyright 2016 Dawid Kurek. All Rights Reserved.
 
-#ifndef INCLUDE_C8FORM_HPP_
-#define INCLUDE_C8FORM_HPP_
+#ifndef INCLUDE_GUI_C8FORM_HPP_
+#define INCLUDE_GUI_C8FORM_HPP_
 
 #include <functional>
 #include <memory>
@@ -12,6 +12,10 @@
 #include <nana/gui.hpp>
 #include <nana/gui/widgets/form.hpp>
 #include <nana/gui/widgets/menubar.hpp>
+
+#include "display.hpp"
+
+namespace gui {
 
 class C8form : public nana::form {
  public:
@@ -31,5 +35,6 @@ class C8form : public nana::form {
   FileChoosen fileChoosenCallback;
 };
 
-#endif  // INCLUDE_C8FORM_HPP_
+}  // namespace gui
 
+#endif  // INCLUDE_GUI_C8FORM_HPP_

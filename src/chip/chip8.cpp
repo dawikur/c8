@@ -1,6 +1,6 @@
 // Copyright 2016 Dawid Kurek. All Rights Reserved.
 
-#include "chip8.hpp"
+#include "chip/chip8.hpp"
 
 #include <atomic>
 #include <fstream>
@@ -8,9 +8,11 @@
 #include <string>
 #include <thread>
 
-#include "executor.hpp"
-#include "memory.hpp"
-#include "opcode.hpp"
+#include "chip/executor.hpp"
+#include "chip/memory.hpp"
+#include "chip/opcode.hpp"
+
+namespace chip {
 
 Chip8::Chip8(Byte const &clock)
   : cycleDuration{1000 / clock}
@@ -78,3 +80,5 @@ void Chip8::tick() {
 void Chip8::wait() {
   std::this_thread::sleep_for(std::chrono::milliseconds(166));
 }
+
+}  // namespace chip

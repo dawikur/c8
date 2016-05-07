@@ -2,7 +2,7 @@
 
 #include <type_traits>
 
-#include "executor.hpp"
+#include "chip/executor.hpp"
 
 #include "gtest/gtest.h"
 
@@ -18,12 +18,12 @@ class executor_test : public ::testing::Test {
   }
 
   void execute(Word const word) {
-    do_execute(Opcode{word}, memory, getKey);
+    do_execute(chip::Opcode{word}, memory, getKey);
   }
 
-  Executor do_execute;
-  Memory memory;
-  Executor::GetKey getKey;
+  chip::Executor do_execute;
+  chip::Memory memory;
+  chip::Executor::GetKey getKey;
   Byte inputKey;
 };
 

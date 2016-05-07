@@ -1,11 +1,11 @@
 // Copyright 2016, Dawid Kurek, dawikur@gmail.com
 
-#include "opcode.hpp"
+#include "chip/opcode.hpp"
 
 #include "gtest/gtest.h"
 
 TEST(opcode_test, opcode) {
-  Opcode opcode(0x1234);
+  chip::Opcode opcode(0x1234);
 
   ASSERT_EQ(0x1234, opcode.raw);
   ASSERT_EQ(0x1   , opcode.id);
