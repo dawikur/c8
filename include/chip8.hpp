@@ -13,7 +13,7 @@
 
 class Chip8 {
  public:
-  Chip8();
+  explicit Chip8(Byte const &clock = 60);
   ~Chip8();
 
   void load(std::string const &file);
@@ -24,6 +24,12 @@ class Chip8 {
   void start();
   void stop();
   void main();
+
+  void tick();
+  void wait();
+
+  using Duration = std::chrono::duration<double>;
+  Duration cycleDuration;
 
   Memory memory;
   Opcode command;
