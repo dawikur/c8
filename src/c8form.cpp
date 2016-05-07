@@ -5,20 +5,25 @@
 #include <string>
 
 #include <nana/gui/filebox.hpp>
-#include <nana/gui/wvl.hpp>
 
 C8form::C8form()
-  : nana::form{}, fileChoosenCallback{[](std::string const &) {}}, menubar{*this} {
+  : nana::form{}, drawer{*this}, menubar{*this}, fileChoosenCallback{[](std::string const &) {}} {
   caption("c8");
 
   bgcolor(nana::colors::white);
   menubar.bgcolor(nana::colors::white);
 
   createMenubar();
+
+  drawer.draw([](nana::paint::graphics &graph) {
+    graph.rectangle(nana::rectangle{50, 50, 100, 100}, true, nana::colors::black);
+  });
 }
 
 void C8form::exec() {
+  drawer.update();
   show();
+  drawer.update();
   nana::exec();
 }
 

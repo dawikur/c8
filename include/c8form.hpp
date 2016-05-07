@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 
+#include <nana/gui.hpp>
 #include <nana/gui/widgets/form.hpp>
 #include <nana/gui/widgets/menubar.hpp>
 
@@ -25,6 +26,7 @@ class C8form : public nana::form {
  private:
   void createMenubar();
 
+  nana::drawing drawer;
   nana::menubar menubar;
   FileChoosen fileChoosenCallback;
 };
