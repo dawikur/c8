@@ -7,14 +7,18 @@
 #include <stdexcept>
 #include <string>
 #include <thread>
-#include <iostream>
 
 #include "executor.hpp"
 #include "memory.hpp"
 #include "opcode.hpp"
 
 Chip8::Chip8(Byte const &clock)
-  : cycleDuration{1 / clock}, memory{}, command{}, execute{}, running{false}, worker{} {}
+  : cycleDuration{1000 / clock}
+  , memory{}
+  , command{}
+  , execute{}
+  , running{false}
+  , worker{} {}
 
 Chip8::~Chip8() {
   stop();
@@ -71,13 +75,5 @@ void Chip8::tick() {
 }
 
 void Chip8::wait() {
-  static auto lastEntry = std::chrono::steady_clock::now();
-  auto entry = std::chrono::steady_clock::now();
-
-  auto const duration = entry - lastEntry;
-  if (duration < cycleDuration) {
-    std::this_thread::sleep_for(cycleDuration - duration);
-  }
-
-  lastEntry = entry;
+  std::this_thread::sleep_for(std::chrono::milliseconds(166));
 }

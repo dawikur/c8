@@ -28,7 +28,7 @@ class Chip8 {
   void tick();
   void wait();
 
-  using Duration = std::chrono::duration<double>;
+  using Duration = std::chrono::milliseconds;
   Duration cycleDuration;
 
   Memory memory;
