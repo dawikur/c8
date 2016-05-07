@@ -50,7 +50,7 @@ void C8form::createMenubar() {
                   [this](nana::menu::item_proxy &) {
                     auto msgbox = nana::msgbox{*this, "About c8"}.icon(
                       nana::msgbox::icon_information);
-                    msgbox << "Chip8 - emulator";
+                    msgbox << "Chip8 - interpreter";
                     msgbox.show();
                   });
 }

@@ -1,6 +1,6 @@
 :8ball: c8
 ===
-> Chip8 - emulator, debugger and compiler
+> Chip8 - interpreter, debugger and compiler
 
 [![Linux Build Status](https://img.shields.io/travis/dawikur/c8/master.svg?
   label=linux&style=flat-square)](https://travis-ci.org/dawikur/c8)
