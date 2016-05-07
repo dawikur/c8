@@ -5,5 +5,5 @@ if [ ! -d build ]; then
 fi
 
 cd build || exit 1
-cmake -G"Unix Makefiles" .. -DCMAKE_CXX_COMPILER="${COMPILER:-clang++}"
+VERBOSE=1 cmake -G"Unix Makefiles" .. -DCMAKE_CXX_COMPILER="${COMPILER:-clang++}"
 make
