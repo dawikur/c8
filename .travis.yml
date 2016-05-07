@@ -41,3 +41,4 @@ matrix:
 script:
   - ./script/build &&
     ./script/run_tests
+  - cat /home/travis/build/dawikur/c8/build/thirdparty/nana/src/nana/CMakeLists.txt

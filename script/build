@@ -6,5 +6,4 @@ fi
 
 cd build || exit 1
 cmake .. -DCMAKE_CXX_COMPILER="${COMPILER:-clang++}"
-cat /home/travis/build/dawikur/c8/build/thirdparty/nana/src/nana/CMakeLists.txt
 make
