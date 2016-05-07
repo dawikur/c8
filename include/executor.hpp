@@ -38,7 +38,7 @@ class Executor {
         Case( 0x3, XOR,    M.V[O.x] = M.V[O.x] ^ M.V[O.y]              );
         Case( 0x4, ADD,  { Word ret = M.V[O.x] + M.V[O.y];
                            M.VF = (ret > 255 ? 0x01 : 0x00);
-                           M.V[O.x] = ret;          }                  );
+                           M.V[O.x] = static_cast<Byte>(ret); }        );
         Case( 0x5, SUB,  { M.VF = (M.V[O.x] > M.V[O.y] ? 0x01 : 0x00);
                            M.V[O.x] = M.V[O.x] - M.V[O.y]; }           );
         Case( 0x6, SHR,  { M.VF = (M.V[O.x] & 0x01);

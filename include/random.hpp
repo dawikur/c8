@@ -19,7 +19,7 @@ class Random {
 
   std::random_device randomDevice;
   std::mt19937 generator;
-  std::uniform_int_distribution<Byte> distribution;
+  std::uniform_int_distribution<unsigned char> distribution;
 };
 
 #endif  // INCLUDE_RANDOM_HPP_
