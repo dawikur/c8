@@ -26,12 +26,10 @@ void Display::draw(nana::paint::graphics &graphics) {
 
   graphics.rectangle(area.getBorder(), false, nana::colors::black);
 
-  for (int x = 0; x < Width; ++x) {
-    for (int y = 0; y < Height; ++y) {
-      int const dst = (x + (y * Width));
-      int const byte = _memory[dst / 8];
-      int const bit  = (byte >> (dst % 8)) & 0x1;
-
+  for (int y = 0; y < Height; ++y) {
+    for (int x = 0; x < Width; ++x) {
+      auto const pos = x + (y * Width);
+      auto const bit = (_memory[pos/8] >> (7- pos%8)) & 0x01;
       if (bit == 0x0) {
         continue;
       }

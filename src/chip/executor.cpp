@@ -70,7 +70,7 @@ Executor::Executor() : _lookupTable {
     Case(0x15, LD,     M.DT = M.V[O.x]                             );
     Case(0x18, LD,     M.ST = M.V[O.x]                             );
     Case(0x1E, ADD,    M.I = M.I + M.V[O.x]                        );
-    Case(0x29, LD,     M.I = offsetof(Memory, Keypad) + (O.x * 5)  );
+    Case(0x29, LD,     M.I = offsetof(Memory, Font) + (M.V[O.x] * 5)  );
     Case(0x33, LD,   { M.Raw[M.I+0] = (M.V[O.x] / 100) % 10;
                        M.Raw[M.I+1] = (M.V[O.x] /  10) % 10;
                        M.Raw[M.I+2] = (M.V[O.x] /   1) % 10; }
