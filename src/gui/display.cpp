@@ -5,7 +5,7 @@
 
 namespace gui {
 
-Display::Display(Byte *memory,
+Display::Display(Byte const *const memory,
                  nana::form &form,
                  unsigned const Width,
                  unsigned const Height)

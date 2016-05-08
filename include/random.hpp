@@ -5,6 +5,7 @@
 
 #include <limits>
 #include <random>
+#include <iostream>
 
 #include "type.hpp"
 
@@ -17,12 +18,10 @@ class Random {
 
  private:
   Random()
-    : randomDevice{}
-    , generator{randomDevice()}
+    : generator{}
     , distribution{std::numeric_limits<Byte>::min(),
                    std::numeric_limits<Byte>::max()} {}
 
-  std::random_device randomDevice;
   std::mt19937 generator;
   std::uniform_int_distribution<> distribution;
 };

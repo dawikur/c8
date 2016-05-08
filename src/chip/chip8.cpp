@@ -49,7 +49,7 @@ void Chip8::redraw(Redraw const &callback) {
   _redraw = callback;
 }
 
-Byte* Chip8::getDisplay() {
+Byte const *const Chip8::getDisplay() {
   return _memory.Display;
 }
 
@@ -89,7 +89,7 @@ void Chip8::tick() {
 }
 
 void Chip8::wait() {
-  std::this_thread::sleep_for(std::chrono::milliseconds(166));
+  std::this_thread::sleep_for(std::chrono::milliseconds(16));
 }
 
 }  // namespace chip

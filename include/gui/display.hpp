@@ -16,7 +16,7 @@ namespace gui {
 
 class Display {
  public:
-  explicit Display(Byte *memory,
+  explicit Display(Byte const *const memory,
                    nana::form &form,
                    unsigned const Width = 64,
                    unsigned const Height = 32);
@@ -38,7 +38,7 @@ class Display {
   unsigned const Width;
   unsigned const Height;
 
-  Byte *_memory;
+  Byte const *const _memory;
   nana::form &_form;
   nana::drawing _drawer;
 };

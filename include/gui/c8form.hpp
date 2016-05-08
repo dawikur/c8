@@ -23,7 +23,7 @@ class C8form : public nana::form {
   using FileChoosen = std::function<void (std::string const&)>;
   using Redraw = std::function<void ()>;
 
-  explicit C8form(Byte *display);
+  explicit C8form(Byte const *const display);
 
   void exec();
 

@@ -8,7 +8,7 @@
 
 namespace gui {
 
-C8form::C8form(Byte *display)
+C8form::C8form(Byte const *const display)
   : nana::form{}
   , _menubar{*this}
   , _fileChoosen{[](std::string const &) {}}

@@ -12,10 +12,13 @@ Executor::Executor() : _lookupTable {
 
   Switch   (0, kk,   {
     Case(0xE0, CLR,    memset(M.Display, 0, sizeof (M.Display))    );
-    Case(0xEE, RET,    M.PC = M.Stack[M.SP]; --M.SP                );
+    Case(0xEE, RET,    M.PC = M.Stack[M.SP % 0xF]; --M.SP          );
   }),
   Operation(1, JP)   { M.PC = O.nnn;                               },
-  Operation(2, CALL) { ++M.SP; M.Stack[M.SP] = M.PC; M.PC = O.nnn; },
+  Operation(2, CALL) { ++M.SP; M.SP %= 0xF;
+                       M.Stack[M.SP] = M.PC;
+                       M.PC = O.nnn;
+  },
   Operation(3, SE)   { if (M.V[O.x] == O.kk)     { M.PC += 2; }    },
   Operation(4, SNE)  { if (M.V[O.x] != O.kk)     { M.PC += 2; }    },
   Operation(5, SE)   { if (M.V[O.x] == M.V[O.y]) { M.PC += 2; }    },

@@ -24,7 +24,7 @@ class Chip8 {
   void getKey(GetKey const &callback);
   void redraw(Redraw const &callback);
 
-  Byte* getDisplay();
+  Byte const *const getDisplay();
 
  private:
   void start();
