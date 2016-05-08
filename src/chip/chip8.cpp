@@ -15,12 +15,11 @@
 namespace chip {
 
 Chip8::Chip8(Byte const &clock)
-  : cycleDuration{1000 / clock}
-  , memory{}
-  , command{}
-  , execute{}
-  , running{false}
-  , worker{} {}
+  : _cycleDuration{1000 / clock}
+  , _memory{}
+  , _execute{}
+  , _running{false}
+  , _worker{} {}
 
 Chip8::~Chip8() {
   stop();
@@ -36,44 +35,50 @@ void Chip8::load(std::string const &file) {
                                std::to_string(0x1000 - 0x200)};
     }
 
-    memory.Raw[position++] = input.get();
+    _memory.Raw[position++] = input.get();
   }
 
   start();
 }
 
 void Chip8::getKey(GetKey const &callback) {
-  getKeyCallback = callback;
+  _getKey = callback;
+}
+
+Byte* Chip8::getDisplay() {
+  return _memory.Display;
 }
 
 void Chip8::start() {
-  running = true;
-  memory.PC = 0x200;
-  worker = std::thread{&Chip8::main, this};
+  _running = true;
+  _memory.PC = 0x200;
+  _worker = std::thread{&Chip8::main, this};
 }
 
 void Chip8::stop() {
-  running = false;
-  if (worker.joinable()) {
-    worker.join();
+  _running = false;
+  if (_worker.joinable()) {
+    _worker.join();
   }
 }
 
 void Chip8::main() {
-  while (running) {
-    execute(command, memory, getKeyCallback);
+  while (_running) {
+    Opcode const command{_memory.Raw[_memory.PC]};
+    _execute(command, _memory, _getKey);
+
     tick();
     wait();
   }
 }
 
 void Chip8::tick() {
-  ++memory.PC;
-  if (memory.ST > 0) {
-    --memory.ST;
+  ++_memory.PC;
+  if (_memory.ST > 0) {
+    --_memory.ST;
   }
-  if (memory.DT > 0) {
-    --memory.DT;
+  if (_memory.DT > 0) {
+    --_memory.DT;
   }
 }
 

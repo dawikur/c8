@@ -9,7 +9,6 @@
 
 #include "executor.hpp"
 #include "memory.hpp"
-#include "opcode.hpp"
 
 namespace chip {
 
@@ -23,6 +22,8 @@ class Chip8 {
   void load(std::string const &file);
   void getKey(GetKey const &callback);
 
+  Byte* getDisplay();
+
  private:
   void start();
   void stop();
@@ -32,15 +33,14 @@ class Chip8 {
   void wait();
 
   using Duration = std::chrono::milliseconds;
-  Duration cycleDuration;
+  Duration _cycleDuration;
 
-  Memory memory;
-  Opcode command;
-  Executor execute;
-  GetKey getKeyCallback;
+  Memory _memory;
+  Executor _execute;
+  GetKey _getKey;
 
-  std::atomic_bool running;
-  std::thread worker;
+  std::atomic_bool _running;
+  std::thread _worker;
 };
 
 }  // namespace chip

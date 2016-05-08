@@ -8,16 +8,15 @@
 
 namespace gui {
 
-C8form::C8form()
-  : nana::form{}, drawer{*this}, menubar{*this}, fileChoosenCallback{[](std::string const &) {}} {
+C8form::C8form(Byte *display)
+  : nana::form{}
+  , _menubar{*this}
+  , _fileChoosen{[](std::string const &) {}}
+  , _display{display, *this} {
   caption("c8");
   bgcolor(nana::colors::white);
 
   createMenubar();
-
-  drawer.draw([](nana::paint::graphics &graph) {
-    graph.rectangle(nana::rectangle{50, 50, 100, 100}, true, nana::colors::black);
-  });
 }
 
 void C8form::exec() {
@@ -26,21 +25,21 @@ void C8form::exec() {
 }
 
 void C8form::fileChoosen(FileChoosen const &callback) {
-  fileChoosenCallback = callback;
+  _fileChoosen = callback;
 }
 
 void C8form::createMenubar() {
-  menubar.bgcolor(nana::colors::white);
+  _menubar.bgcolor(nana::colors::white);
 
-  auto& fileMenu = menubar.push_back("File");
+  auto& fileMenu = _menubar.push_back("File");
   fileMenu.append("Open", [this](nana::menu::item_proxy&) {
       nana::filebox filebox{*this, true};
-      filebox.add_filter("Rom File", "*.rom");
-      filebox.add_filter("c8rom File", "*.c8rom");
-      filebox.add_filter("All Files", "*.*");
+      filebox.add_filter("Rom File (*.rom)", "*.rom");
+      filebox.add_filter("c8rom File (*.c8rom)", "*.c8rom");
+      filebox.add_filter("All Files (*.*)", "*.*");
 
       if (filebox()) {
-        fileChoosenCallback(filebox.file());
+        _fileChoosen(filebox.file());
       }
   });
   fileMenu.append_splitter();
@@ -48,10 +47,10 @@ void C8form::createMenubar() {
       nana::API::exit();
   });
 
-  auto& viewMenu = menubar.push_back("View");
+  auto& viewMenu = _menubar.push_back("View");
   viewMenu.append("Debug");
 
-  auto& helpMenu = menubar.push_back("Help");
+  auto& helpMenu = _menubar.push_back("Help");
   helpMenu.append("About",
                   [this](nana::menu::item_proxy &) {
                     auto msgbox = nana::msgbox{*this, "About c8"}.icon(

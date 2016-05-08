@@ -3,6 +3,7 @@
 #include <type_traits>
 
 #include "chip/executor.hpp"
+#include "../src/chip/executor.cpp"
 
 #include "gtest/gtest.h"
 

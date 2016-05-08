@@ -4,16 +4,17 @@
 #define INCLUDE_GUI_C8FORM_HPP_
 
 #include <functional>
-#include <memory>
-#include <stdexcept>
+#include <memory>                                                              // fix for nana
+#include <stdexcept>                                                           // fix for nana
 #include <string>
-#include <vector>
+#include <vector>                                                              // fix dor nana
 
 #include <nana/gui.hpp>
 #include <nana/gui/widgets/form.hpp>
 #include <nana/gui/widgets/menubar.hpp>
 
-#include "display.hpp"
+#include "gui/display.hpp"
+#include "type.hpp"
 
 namespace gui {
 
@@ -21,7 +22,7 @@ class C8form : public nana::form {
  public:
   using FileChoosen = std::function<void (std::string const&)>;
 
-  C8form();
+  explicit C8form(Byte *display);
 
   void exec();
 
@@ -30,9 +31,10 @@ class C8form : public nana::form {
  private:
   void createMenubar();
 
-  nana::drawing drawer;
-  nana::menubar menubar;
-  FileChoosen fileChoosenCallback;
+  nana::menubar _menubar;
+  FileChoosen _fileChoosen;
+
+  Display _display;
 };
 
 }  // namespace gui

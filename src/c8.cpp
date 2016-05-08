@@ -9,7 +9,7 @@
 int main(int argc, char *argv[]) {
   try {
     chip::Chip8 chip8;
-    gui::C8form form;
+    gui::C8form form{chip8.getDisplay()};
 
     //chip8.getKey();
     form.fileChoosen([&chip8](std::string const &file) { chip8.load(file); });
