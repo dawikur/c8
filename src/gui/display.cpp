@@ -17,6 +17,10 @@ Display::Display(Byte *memory,
   _drawer.draw([this](nana::paint::graphics &graphics) { draw(graphics); });
 }
 
+void Display::update() {
+  _drawer.update();
+}
+
 void Display::draw(nana::paint::graphics &graphics) {
   auto const area = getArea();
 

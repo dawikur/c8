@@ -28,6 +28,10 @@ void C8form::fileChoosen(FileChoosen const &callback) {
   _fileChoosen = callback;
 }
 
+C8form::Redraw C8form::redrawCallback() {
+  return [this]() { _display.update(); };
+}
+
 void C8form::createMenubar() {
   _menubar.bgcolor(nana::colors::white);
 

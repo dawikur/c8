@@ -21,6 +21,8 @@ class Display {
                    unsigned const Width = 64,
                    unsigned const Height = 32);
 
+  void update();
+
  private:
   void draw(nana::paint::graphics &graphics);
 

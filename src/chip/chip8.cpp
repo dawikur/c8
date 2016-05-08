@@ -45,6 +45,10 @@ void Chip8::getKey(GetKey const &callback) {
   _getKey = callback;
 }
 
+void Chip8::redraw(Redraw const &callback) {
+  _redraw = callback;
+}
+
 Byte* Chip8::getDisplay() {
   return _memory.Display;
 }
@@ -64,8 +68,9 @@ void Chip8::stop() {
 
 void Chip8::main() {
   while (_running) {
-    Opcode const command{_memory.Raw[_memory.PC]};
-    _execute(command, _memory, _getKey);
+    Word opcode = _memory.Raw[_memory.PC] << 8
+                | _memory.Raw[_memory.PC + 1];
+    _execute(Opcode{opcode}, _memory, _getKey);
 
     tick();
     wait();
@@ -73,13 +78,14 @@ void Chip8::main() {
 }
 
 void Chip8::tick() {
-  ++_memory.PC;
+  _memory.PC += 2;
   if (_memory.ST > 0) {
     --_memory.ST;
   }
   if (_memory.DT > 0) {
     --_memory.DT;
   }
+  _redraw();
 }
 
 void Chip8::wait() {

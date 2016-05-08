@@ -21,12 +21,15 @@ namespace gui {
 class C8form : public nana::form {
  public:
   using FileChoosen = std::function<void (std::string const&)>;
+  using Redraw = std::function<void ()>;
 
   explicit C8form(Byte *display);
 
   void exec();
 
   void fileChoosen(FileChoosen const &callback);
+
+  Redraw redrawCallback();
 
  private:
   void createMenubar();

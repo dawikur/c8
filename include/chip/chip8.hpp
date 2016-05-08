@@ -15,12 +15,14 @@ namespace chip {
 class Chip8 {
  public:
   using GetKey = Executor::GetKey;
+  using Redraw = std::function<void ()>;
 
   explicit Chip8(Byte const &clock = 60);
   ~Chip8();
 
   void load(std::string const &file);
   void getKey(GetKey const &callback);
+  void redraw(Redraw const &callback);
 
   Byte* getDisplay();
 
@@ -38,6 +40,7 @@ class Chip8 {
   Memory _memory;
   Executor _execute;
   GetKey _getKey;
+  Redraw _redraw;
 
   std::atomic_bool _running;
   std::thread _worker;

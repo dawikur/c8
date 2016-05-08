@@ -47,17 +47,15 @@ Executor::Executor() : _lookupTable {
   Operation(A, LD)   { M.I = O.nnn;                                },
   Operation(B, JP)   { M.PC = O.nnn + M.V[0];                      },
   Operation(C, RND)  { M.V[O.x] = Random::get() & O.kk;            },
-  Operation(D, DRW)  { Byte const dst = M.V[O.x] + M.V[O.y];
-                       Byte const dstByte = dst / 8;
-                       Byte const dstBit  = dst % 8;
-
-                       Byte VF = 0;
-                       for (auto p = 0; p < O.n; ++p) {
-                         Byte const byte = M.Raw[M.I + p];
-
-                         VF |= (M.Display[dstByte + p]     ^= (byte >> dstBit));
-                         VF |= (M.Display[dstByte + p + 1] ^= (byte << (8 - dstBit)));
-                       }
+  Operation(D, DRW)  {
+    auto put = [&M](int a, unsigned char b) { return ((M.Display[a] ^= b) ^ b) & b; };
+    Byte kk= 0;
+    Byte p = O.n;
+    for (auto x = M.V[O.x], y = M.V[O.y]; p--; ) {
+        kk |= put( ((x+0)%64 + (y+p)%32 * 64) / 8, M.Raw[(M.I+p)&0xFFF] >> (    x%8) )
+           |  put( ((x+7)%64 + (y+p)%32 * 64) / 8, M.Raw[(M.I+p)&0xFFF] << (8 - x%8) );
+    }
+    M.VF = (kk != 0);
   },
   Switch   (E, kk,   {
     Case(0x9E, SKP,    if ( M.Keypad[M.V[O.x]]) { M.PC += 2; }     );
