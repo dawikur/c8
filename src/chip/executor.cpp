@@ -51,12 +51,14 @@ Executor::Executor() : _lookupTable {
   Operation(B, JP)   { M.PC = O.nnn + M.V[0];                      },
   Operation(C, RND)  { M.V[O.x] = Random::get() & O.kk;            },
   Operation(D, DRW)  {
-    auto put = [&M](int a, unsigned char b) { return ((M.Display[a] ^= b) ^ b) & b; };
+    auto const put = [&M](Byte const a, Byte const b) {
+      return ((M.Display[a] ^= b) ^ b) & b;
+    };
     Byte kk= 0;
     Byte p = O.n;
     for (auto x = M.V[O.x], y = M.V[O.y]; p--; ) {
-        kk |= put( ((x+0)%64 + (y+p)%32 * 64) / 8, M.Raw[(M.I+p)&0xFFF] >> (    x%8) )
-           |  put( ((x+7)%64 + (y+p)%32 * 64) / 8, M.Raw[(M.I+p)&0xFFF] << (8 - x%8) );
+        kk |= put( ((x)%64 + (y+p)%32 * 64) / 8, M.Raw[M.I+p] >> (x%8) )
+           |  put( ((x+7)%64 + (y+p)%32 * 64) / 8, M.Raw[M.I+p] << (8 - x%8) );
     }
     M.VF = (kk != 0);
   },
