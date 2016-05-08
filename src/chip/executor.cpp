@@ -28,30 +28,37 @@ Executor::Executor() : _lookupTable {
     Case( 0x3, XOR,    M.V[O.x] = M.V[O.x] ^ M.V[O.y]              );
     Case( 0x4, ADD,  { Word ret = M.V[O.x] + M.V[O.y];
                        M.VF = (ret > 255 ? 0x01 : 0x00);
-                       M.V[O.x] = static_cast<Byte>(ret); }        );
+                       M.V[O.x] = static_cast<Byte>(ret); }
+    );
     Case( 0x5, SUB,  { M.VF = (M.V[O.x] > M.V[O.y] ? 0x01 : 0x00);
-                       M.V[O.x] = M.V[O.x] - M.V[O.y]; }           );
+                       M.V[O.x] = M.V[O.x] - M.V[O.y]; }
+    );
     Case( 0x6, SHR,  { M.VF = (M.V[O.x] & 0x01);
-                       M.V[O.x] >>= 1; }                           );
+                       M.V[O.x] >>= 1; }
+    );
     Case( 0x7, SUBN, { M.VF = (M.V[O.y] > M.V[O.x] ? 0x01 : 0x00);
-                       M.V[O.x] = M.V[O.x] - M.V[O.y]; }           );
+                       M.V[O.x] = M.V[O.x] - M.V[O.y]; }
+    );
     Case( 0xE, SHL,  { M.VF = (M.V[O.x] & 0x80 ? 0x01 : 0x00);
-                       M.V[O.x] <<= 1; }                           );
+                       M.V[O.x] <<= 1; }
+    );
   }),
   Operation(9, SNE)  { if (M.V[O.x] != M.V[O.y]) { M.PC += 2; }    },
   Operation(A, LD)   { M.I = O.nnn;                                },
   Operation(B, JP)   { M.PC = O.nnn + M.V[0];                      },
   Operation(C, RND)  { M.V[O.x] = Random::get() & O.kk;            },
-  Operation(D, DRW)  { M.VF = 0;
-                       Byte dst = M.V[O.x] + M.V[O.y]; // hmm, what and where is stride?
+  Operation(D, DRW)  { Byte const dst = M.V[O.x] + M.V[O.y];
+                       Byte const dstByte = dst / 8;
+                       Byte const dstBit  = dst % 8;
+
+                       Byte VF = 0;
                        for (auto p = 0; p < O.n; ++p) {
-                         Byte const byte = M.V[M.I + p];
-                         Byte const before = M.Display[dst + p];
-                         M.Display[dst + p] ^= byte;
-                         if (before != M.Display[dst + p]) {
-                           M.VF = 1;
-                         }
-                       }                                           },
+                         Byte const byte = M.Raw[M.I + p];
+
+                         VF |= (M.Display[dstByte + p]     ^= (byte >> dstBit));
+                         VF |= (M.Display[dstByte + p + 1] ^= (byte << (8 - dstBit)));
+                       }
+  },
   Switch   (E, kk,   {
     Case(0x9E, SKP,    if ( M.Keypad[M.V[O.x]]) { M.PC += 2; }     );
     Case(0xA1, SKNP,   if (!M.Keypad[M.V[O.x]]) { M.PC += 2; }     );
@@ -65,13 +72,16 @@ Executor::Executor() : _lookupTable {
     Case(0x29, LD,     M.I = offsetof(Memory, Keypad) + (O.x * 5)  );
     Case(0x33, LD,   { M.Raw[M.I+0] = (M.V[O.x] / 100) % 10;
                        M.Raw[M.I+1] = (M.V[O.x] /  10) % 10;
-                       M.Raw[M.I+2] = (M.V[O.x] /   1) % 10; }     );
+                       M.Raw[M.I+2] = (M.V[O.x] /   1) % 10; }
+    );
     Case(0x55, LD,   { for (int i = 0; i <= O.x; ++i) {
                          M.Raw[M.I+i] = M.V[i];
-                       } }                                         );
+                       } }
+    );
     Case(0x65, LD,   { for (int i = 0; i <= O.x; ++i) {
                          M.V[i] = M.Raw[M.I+i];
-                       } }                                         );
+                       } }
+    );
   })
 
 #undef Case

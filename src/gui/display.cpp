@@ -1,6 +1,7 @@
 // Copyright 2016 Dawid Kurek. All Rights Reserved.
 
 #include "gui/display.hpp"
+#include <iostream>
 
 namespace gui {
 
@@ -23,7 +24,13 @@ void Display::draw(nana::paint::graphics &graphics) {
 
   for (int x = 0; x < Width; ++x) {
     for (int y = 0; y < Height; ++y) {
-      auto const color = nana::colors::black;
+      int const dst = (x + (y * Width));
+      int const byte = _memory[dst / 8];
+      int const bit  = (byte >> (dst % 8)) & 0x1;
+
+      if (bit == 0x0) {
+        continue;
+      }
 
       graphics.rectangle(
         nana::rectangle{static_cast<int>(area.x + x * area.dx),
@@ -31,7 +38,7 @@ void Display::draw(nana::paint::graphics &graphics) {
                         area.dx,
                         area.dy},
         true,
-        color);
+        nana::colors::black);
     }
   }
 }

@@ -19,7 +19,8 @@ union Memory {
     Word PC;                                                                   // program counter
     Byte SP;                                                                   // stack pointer
     Word Stack[16];                                                            // stack
-    Byte Keypad[16 * 5];                                                       // keyboard
+    Byte Keypad[16];                                                           // pressed keys
+    Byte Font[16 * 5];                                                         // font
     Byte Display[64 * 32 / 8];                                                 // display memory
   };
 };

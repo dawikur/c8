@@ -254,7 +254,7 @@ TEST_F(executor_test, C_RND_set_Vx_to_random_byte_AND_kk) {
   ASSERT_EQ(0x0, memory.V[5]);
 }
 
-TEST_F(executor_test, D_DRW_display_n_byte_sprite_TODO) {
+TEST_F(executor_test, D_DRW_display_n_byte_sprite) {
   execute(0xD58A);
 
   EXPECT_TRUE(false);
@@ -332,7 +332,7 @@ TEST_F(executor_test, F_ADD_set_I_to_I_add_Vx) {
 TEST_F(executor_test, F_LD_set_I_to_location_of_sprite_for_digit_Vx) {
   execute(0xFB29);
 
-  EXPECT_EQ((&memory.Keypad[0xB * 5] - &memory.Raw[0]), memory.I);
+  EXPECT_EQ((&memory.Font[0xB * 5] - &memory.Raw[0]), memory.I);
 }
 
 TEST_F(executor_test, F_LD_store_BCD_representation_of_Vx_in_memory_location_I) {
