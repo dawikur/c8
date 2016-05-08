@@ -31,6 +31,7 @@ class Chip8 {
   void stop();
   void main();
 
+  Word fetch();
   void tick();
   void wait();
 

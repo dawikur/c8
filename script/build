@@ -5,5 +5,10 @@ if [ ! -d build ]; then
 fi
 
 cd build || exit 1
-cmake .. -DCMAKE_CXX_COMPILER="${COMPILER:-clang++}"
+
+if [ "${1}" = "Debug" ]; then
+  cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER="${COMPILER:-clang++}"
+else
+  cmake .. -DCMAKE_CXX_COMPILER="${COMPILER:-clang++}"
+fi
 make

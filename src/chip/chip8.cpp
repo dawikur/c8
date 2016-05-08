@@ -68,13 +68,15 @@ void Chip8::stop() {
 
 void Chip8::main() {
   while (_running) {
-    Word opcode = _memory.Raw[_memory.PC] << 8
-                | _memory.Raw[_memory.PC + 1];
-    _execute(Opcode{opcode}, _memory, _getKey);
-
+    auto const opcode = fetch();
     tick();
+    _execute(Opcode{opcode}, _memory, _getKey);
     wait();
   }
+}
+
+Word Chip8::fetch() {
+  return _memory.Raw[_memory.PC] << 8 | _memory.Raw[_memory.PC + 1];
 }
 
 void Chip8::tick() {
