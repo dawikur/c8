@@ -31,5 +31,5 @@ test_script:
   - cmd: script\run_tests.bat
 
 artifacts:
-  - path: build\test\htl_test.exe
+  - path: src\Release\c8.exe
 
