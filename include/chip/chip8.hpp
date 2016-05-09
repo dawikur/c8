@@ -28,6 +28,8 @@ class Chip8 {
 
  private:
   void load(std::string const &);
+  void keyEvent(wchar_t const key, Byte const isPressed);
+
   size_t filesize(std::string const&);
   void start();
   void stop();

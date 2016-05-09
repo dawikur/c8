@@ -10,7 +10,7 @@
 
 using FileChoosen = std::function<void(std::string const &)>;
 using GetKey = std::function<Byte()>;
-using KeyEvent = std::function<void(char const key, bool const isPressed)>;
+using KeyEvent = std::function<void(wchar_t const key, Byte const isPressed)>;
 using Redraw = std::function<void()>;
 
 #endif  // INCLUDE_CALLBACKS_HPP_

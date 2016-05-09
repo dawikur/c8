@@ -18,6 +18,7 @@ C8form::C8form(Byte const *const display)
   bgcolor(nana::colors::white);
 
   createMenubar();
+  connectToKeyboardEvents();
 }
 
 void C8form::exec() {
@@ -67,6 +68,19 @@ void C8form::createMenubar() {
                     msgbox << "Chip8 - interpreter";
                     msgbox.show();
                   });
+}
+
+void C8form::connectToKeyboardEvents() {
+  events().key_press(
+    [this](nana::arg_keyboard const &arg) { keyboardEvent(arg, 0x01); });
+
+  events().key_release(
+    [this](nana::arg_keyboard const &arg) { keyboardEvent(arg, 0x00); });
+}
+
+void C8form::keyboardEvent(nana::arg_keyboard const &arg,
+                           Byte const isPressed) {
+  _keyEvent(arg.key, isPressed);
 }
 
 }  // namespace gui

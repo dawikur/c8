@@ -32,6 +32,8 @@ class C8form : public nana::form {
 
  private:
   void createMenubar();
+  void connectToKeyboardEvents();
+  void keyboardEvent(nana::arg_keyboard const &, Byte const);
 
   nana::menubar _menubar;
   FileChoosen _fileChoosen;

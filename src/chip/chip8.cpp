@@ -4,6 +4,7 @@
 
 #include <atomic>
 #include <fstream>
+#include <map>
 #include <stdexcept>
 #include <string>
 #include <thread>
@@ -40,7 +41,8 @@ FileChoosen Chip8::fileChoosenCallback() {
 }
 
 KeyEvent Chip8::keyEventCallback() {
-  return [this](char const key, bool const isPressed) {};
+  return
+    [this](wchar_t const key, Byte const isPressed) { keyEvent(key, isPressed); };
 }
 
 Byte const *const Chip8::getDisplay() {
@@ -62,7 +64,22 @@ void Chip8::load(std::string const &file) {
   start();
 }
 
-size_t Chip::filesize(std::string const& file) {
+void Chip8::keyEvent(wchar_t const key, Byte const isPressed) {
+  static std::map<wchar_t, int> keyRemap = {
+    {L'1', 0x1}, {L'2', 0x2}, {L'3', 0x3}, {L'4', 0xC},
+    {L'Q', 0x4}, {L'W', 0x5}, {L'E', 0x6}, {L'R', 0xD},
+    {L'A', 0x7}, {L'S', 0x8}, {L'D', 0x9}, {L'F', 0xE},
+    {L'Z', 0xA}, {L'X', 0x0}, {L'C', 0xB}, {L'V', 0xF}
+  };
+
+  if (keyRemap.find(key) == keyRemap.end()) {
+    return;
+  }
+
+  _memory.Keypad[keyRemap[key]] = isPressed;
+}
+
+size_t Chip8::filesize(std::string const& file) {
   std::ifstream in(file, std::ifstream::ate | std::ifstream::binary);
   return in.tellg();
 }
@@ -84,7 +101,7 @@ void Chip8::main() {
   while (_running) {
     auto const opcode = fetch();
     tick();
-    _execute(Opcode{opcode}, _memory, _getKey);
+    _execute(Opcode{opcode}, _memory, _getKey, _redraw);
     wait();
   }
 }
@@ -101,7 +118,6 @@ void Chip8::tick() {
   if (_memory.DT > 0) {
     --_memory.DT;
   }
-  _redraw();
 }
 
 void Chip8::wait() {

@@ -13,10 +13,13 @@ class Executor {
  public:
   Executor();
 
-  void operator()(Opcode const, Memory &, GetKey const &);
+  void operator()(Opcode const, Memory &, GetKey const &, Redraw const &);
 
  private:
-  void (*_lookupTable[16])(Opcode const, Memory&, GetKey const&);
+  void (*_lookupTable[16])(Opcode const,
+                           Memory &,
+                           GetKey const &,
+                           Redraw const &);
 };
 
 }  // namespace chip

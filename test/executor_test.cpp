@@ -9,7 +9,7 @@
 
 class executor_test : public ::testing::Test {
  protected:
-  executor_test() : getKey{[this]() { return inputKey; }} {}
+  executor_test() : getKey{[this]() { return inputKey; }}, redraw{[]() {}} {}
   void SetUp() override {
     memset(memory.Raw, 0, sizeof (memory.Raw));
 
@@ -19,12 +19,13 @@ class executor_test : public ::testing::Test {
   }
 
   void execute(Word const word) {
-    do_execute(chip::Opcode{word}, memory, getKey);
+    do_execute(chip::Opcode{word}, memory, getKey, redraw);
   }
 
   chip::Executor do_execute;
   chip::Memory memory;
   GetKey getKey;
+  Redraw redraw;
   Byte inputKey;
 };
 
