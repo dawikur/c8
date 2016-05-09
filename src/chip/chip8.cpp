@@ -101,7 +101,16 @@ void Chip8::tick() {
 }
 
 void Chip8::wait() {
-  std::this_thread::sleep_for(std::chrono::milliseconds(16));
+  static auto lastEntry = std::chrono::system_clock::now();
+
+  auto const newEntry = std::chrono::system_clock::now();
+  auto const lastCycleDuration = newEntry - lastEntry;
+
+  if (lastCycleDuration < _cycleDuration) {
+    std::this_thread::sleep_for(_cycleDuration - lastCycleDuration);
+  }
+
+  lastEntry = newEntry;
 }
 
 }  // namespace chip
