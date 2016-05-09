@@ -17,16 +17,20 @@ class Chip8 {
   using GetKey = Executor::GetKey;
   using Redraw = std::function<void ()>;
 
+  using FileChoosen = std::function<void(std::string const &)>;
+
   explicit Chip8(Byte const &clock = 60);
   ~Chip8();
 
-  void load(std::string const &file);
   void getKey(GetKey const &callback);
   void redraw(Redraw const &callback);
+
+  FileChoosen fileChoosenCallback();
 
   Byte const *const getDisplay();
 
  private:
+  void load(std::string const &);
   void start();
   void stop();
   void main();

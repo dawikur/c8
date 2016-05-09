@@ -25,6 +25,22 @@ Chip8::~Chip8() {
   stop();
 }
 
+void Chip8::getKey(GetKey const &callback) {
+  _getKey = callback;
+}
+
+void Chip8::redraw(Redraw const &callback) {
+  _redraw = callback;
+}
+
+Chip8::FileChoosen Chip8::fileChoosenCallback() {
+  return [this](std::string const &file) { load(file); };
+}
+
+Byte const *const Chip8::getDisplay() {
+  return _memory.Display;
+}
+
 void Chip8::load(std::string const &file) {
   stop();
 
@@ -39,18 +55,6 @@ void Chip8::load(std::string const &file) {
   }
 
   start();
-}
-
-void Chip8::getKey(GetKey const &callback) {
-  _getKey = callback;
-}
-
-void Chip8::redraw(Redraw const &callback) {
-  _redraw = callback;
-}
-
-Byte const *const Chip8::getDisplay() {
-  return _memory.Display;
 }
 
 void Chip8::start() {

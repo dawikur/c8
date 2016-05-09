@@ -13,10 +13,10 @@ int main(int argc, char *argv[]) {
 
     //chip8.getKey();
     chip8.redraw(form.redrawCallback());
-    form.fileChoosen([&chip8](std::string const &file) { chip8.load(file); });
+    form.fileChoosen(chip8.fileChoosenCallback());
 
     if (argc > 1) {
-      chip8.load(argv[1]);
+      chip8.fileChoosenCallback()(argv[1]);
     }
 
     form.exec();
