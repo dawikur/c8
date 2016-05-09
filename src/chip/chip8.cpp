@@ -50,17 +50,21 @@ Byte const *const Chip8::getDisplay() {
 void Chip8::load(std::string const &file) {
   stop();
 
+  if (filesize(file) > 0x1000) {
+    throw std::runtime_error{"Input file is too big, max size is 0x800"};
+  }
+
   size_t position = 0x200;
   for (std::ifstream input{file, std::ios::binary}; input.good();) {
-    if (position > 0x1000) {
-      throw std::runtime_error{"Input file is too big, max size is " +
-                               std::to_string(0x1000 - 0x200)};
-    }
-
     _memory.Raw[position++] = input.get();
   }
 
   start();
+}
+
+size_t Chip::filesize(std::string const& file) {
+  std::ifstream in(file, std::ifstream::ate | std::ifstream::binary);
+  return in.tellg();
 }
 
 void Chip8::start() {

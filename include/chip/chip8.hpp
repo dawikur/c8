@@ -28,6 +28,7 @@ class Chip8 {
 
  private:
   void load(std::string const &);
+  size_t filesize(std::string const&);
   void start();
   void stop();
   void main();
