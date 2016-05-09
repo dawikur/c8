@@ -7,18 +7,14 @@
 #include <string>
 #include <thread>
 
-#include "executor.hpp"
-#include "memory.hpp"
+#include "callbacks.hpp"
+#include "chip/executor.hpp"
+#include "chip/memory.hpp"
 
 namespace chip {
 
 class Chip8 {
  public:
-  using GetKey = Executor::GetKey;
-  using Redraw = std::function<void ()>;
-
-  using FileChoosen = std::function<void(std::string const &)>;
-
   explicit Chip8(Byte const &clock = 60);
   ~Chip8();
 
@@ -26,6 +22,7 @@ class Chip8 {
   void redraw(Redraw const &callback);
 
   FileChoosen fileChoosenCallback();
+  KeyEvent keyEventCallback();
 
   Byte const *const getDisplay();
 

@@ -18,6 +18,8 @@ Chip8::Chip8(Byte const &clock)
   : _cycleDuration{1000 / clock}
   , _memory{}
   , _execute{}
+  , _getKey{[]() { return 0; }}
+  , _redraw{[]() {}}
   , _running{false}
   , _worker{} {}
 
@@ -33,8 +35,12 @@ void Chip8::redraw(Redraw const &callback) {
   _redraw = callback;
 }
 
-Chip8::FileChoosen Chip8::fileChoosenCallback() {
+FileChoosen Chip8::fileChoosenCallback() {
   return [this](std::string const &file) { load(file); };
+}
+
+KeyEvent Chip8::keyEventCallback() {
+  return [this](char const key, bool const isPressed) {};
 }
 
 Byte const *const Chip8::getDisplay() {

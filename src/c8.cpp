@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
     //chip8.getKey();
     chip8.redraw(form.redrawCallback());
     form.fileChoosen(chip8.fileChoosenCallback());
+    form.keyEvent(chip8.keyEventCallback());
 
     if (argc > 1) {
       chip8.fileChoosenCallback()(argv[1]);

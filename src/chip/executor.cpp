@@ -2,6 +2,13 @@
 
 #include "chip/executor.hpp"
 
+#include <cstring>
+#include <cstddef>
+
+#include "chip/memory.hpp"
+#include "random.hpp"
+
+
 namespace chip {
 
 Executor::Executor() : _lookupTable {

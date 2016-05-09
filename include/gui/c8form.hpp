@@ -13,6 +13,7 @@
 #include <nana/gui/widgets/form.hpp>
 #include <nana/gui/widgets/menubar.hpp>
 
+#include "callbacks.hpp"
 #include "gui/display.hpp"
 #include "type.hpp"
 
@@ -20,14 +21,12 @@ namespace gui {
 
 class C8form : public nana::form {
  public:
-  using FileChoosen = std::function<void (std::string const&)>;
-  using Redraw = std::function<void ()>;
-
   explicit C8form(Byte const *const display);
 
   void exec();
 
   void fileChoosen(FileChoosen const &callback);
+  void keyEvent(KeyEvent const &callback);
 
   Redraw redrawCallback();
 
@@ -36,6 +35,7 @@ class C8form : public nana::form {
 
   nana::menubar _menubar;
   FileChoosen _fileChoosen;
+  KeyEvent _keyEvent;
 
   Display _display;
 };

@@ -12,6 +12,7 @@ C8form::C8form(Byte const *const display)
   : nana::form{}
   , _menubar{*this}
   , _fileChoosen{[](std::string const &) {}}
+  , _keyEvent{[](char const, bool const) {}}
   , _display{display, *this} {
   caption("c8");
   bgcolor(nana::colors::white);
@@ -28,7 +29,11 @@ void C8form::fileChoosen(FileChoosen const &callback) {
   _fileChoosen = callback;
 }
 
-C8form::Redraw C8form::redrawCallback() {
+void C8form::keyEvent(KeyEvent const &callback) {
+  _keyEvent = callback;
+}
+
+Redraw C8form::redrawCallback() {
   return [this]() { _display.update(); };
 }
 

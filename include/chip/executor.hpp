@@ -3,25 +3,17 @@
 #ifndef INCLUDE_CHIP_EXECUTOR_HPP_
 #define INCLUDE_CHIP_EXECUTOR_HPP_
 
-#include <cstddef>
-#include <cstring>
-#include <functional>
-#include <random>
-
-#include "memory.hpp"
-#include "opcode.hpp"
-#include "random.hpp"
-#include "type.hpp"
+#include "callbacks.hpp"
+#include "chip/memory.hpp"
+#include "chip/opcode.hpp"
 
 namespace chip {
 
 class Executor {
  public:
-  using GetKey = std::function<Byte ()>;
-
   Executor();
 
-  void operator()(Opcode const opcode, Memory &memory, GetKey const &getKey);
+  void operator()(Opcode const, Memory &, GetKey const &);
 
  private:
   void (*_lookupTable[16])(Opcode const, Memory&, GetKey const&);

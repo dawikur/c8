@@ -24,7 +24,7 @@ class executor_test : public ::testing::Test {
 
   chip::Executor do_execute;
   chip::Memory memory;
-  chip::Executor::GetKey getKey;
+  GetKey getKey;
   Byte inputKey;
 };
 
