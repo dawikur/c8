@@ -12,7 +12,7 @@ union Memory {
 
   struct {
     Byte V[16];                                                                // registers
-    Byte VF;                                                                   // register flag
+                                                                               // V[0xF] is carry
     Word I;                                                                    // memory address
     Byte DT;                                                                   // delay timer
     Byte ST;                                                                   // sound timer

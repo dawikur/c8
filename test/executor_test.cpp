@@ -64,7 +64,7 @@ TEST_F(executor_test, 2_CALL_call_subroutine_at_nnn) {
   ASSERT_EQ(0x0345, memory.PC);
 }
 
-TEST_F(executor_test, 3_SE_skip_next_instruction_if_Vx_eq_kk_true) {
+TEST_F(executor_test, 3_SE_skip_next_instruction_if_V0xF_eq_kk_true) {
   memory.PC = 1;
 
   execute(0x3404);
@@ -72,7 +72,7 @@ TEST_F(executor_test, 3_SE_skip_next_instruction_if_Vx_eq_kk_true) {
   ASSERT_EQ(3, memory.PC);
 }
 
-TEST_F(executor_test, 3_SE_skip_next_instruction_if_Vx_eq_kk_false) {
+TEST_F(executor_test, 3_SE_skip_next_instruction_if_V0xF_eq_kk_false) {
   memory.PC = 1;
 
   execute(0x3456);
@@ -80,7 +80,7 @@ TEST_F(executor_test, 3_SE_skip_next_instruction_if_Vx_eq_kk_false) {
   ASSERT_EQ(1, memory.PC);
 }
 
-TEST_F(executor_test, 4_SNE_skip_next_instruction_if_Vx_neq_kk_true) {
+TEST_F(executor_test, 4_SNE_skip_next_instruction_if_V0xF_neq_kk_true) {
   memory.PC = 1;
 
   execute(0x4456);
@@ -88,7 +88,7 @@ TEST_F(executor_test, 4_SNE_skip_next_instruction_if_Vx_neq_kk_true) {
   ASSERT_EQ(3, memory.PC);
 }
 
-TEST_F(executor_test, 4_SNE_skip_next_instruction_if_Vx_neq_kk_false) {
+TEST_F(executor_test, 4_SNE_skip_next_instruction_if_V0xF_neq_kk_false) {
   memory.PC = 1;
 
   execute(0x4505);
@@ -96,7 +96,7 @@ TEST_F(executor_test, 4_SNE_skip_next_instruction_if_Vx_neq_kk_false) {
   ASSERT_EQ(1, memory.PC);
 }
 
-TEST_F(executor_test, 5_SE_skip_next_instruction_if_Vx_eq_Vy_true) {
+TEST_F(executor_test, 5_SE_skip_next_instruction_if_V0xF_eq_Vy_true) {
   memory.PC = 1;
   memory.V[4] = 0x5;
 
@@ -105,7 +105,7 @@ TEST_F(executor_test, 5_SE_skip_next_instruction_if_Vx_eq_Vy_true) {
   ASSERT_EQ(3, memory.PC);
 }
 
-TEST_F(executor_test, 5_SE_skip_next_instruction_if_Vx_eq_Vy_false) {
+TEST_F(executor_test, 5_SE_skip_next_instruction_if_V0xF_eq_Vy_false) {
   memory.PC = 1;
 
   execute(0x5450);
@@ -113,123 +113,123 @@ TEST_F(executor_test, 5_SE_skip_next_instruction_if_Vx_eq_Vy_false) {
   ASSERT_EQ(1, memory.PC);
 }
 
-TEST_F(executor_test, 6_LD_set_Vx_to_kk) {
+TEST_F(executor_test, 6_LD_set_V0xF_to_kk) {
   execute(0x6323);
 
   ASSERT_EQ(0x23, memory.V[3]);
 }
 
-TEST_F(executor_test, 7_ADD_set_Vx_to_Vx_plus_kk) {
+TEST_F(executor_test, 7_ADD_set_V0xF_to_V0xF_plus_kk) {
   execute(0x7723);
 
   ASSERT_EQ(0x2A, memory.V[7]);
 }
 
-TEST_F(executor_test, 8_LD_set_Vx_to_Vy) {
+TEST_F(executor_test, 8_LD_set_V0xF_to_Vy) {
   execute(0x8670);
 
   ASSERT_EQ(0x7, memory.V[6]);
 }
 
-TEST_F(executor_test, 8_OR_set_Vx_to_Vx_or_Vy) {
+TEST_F(executor_test, 8_OR_set_V0xF_to_V0xF_or_Vy) {
   execute(0x8141);
 
   ASSERT_EQ(0x5, memory.V[1]);
 }
 
-TEST_F(executor_test, 8_AND_set_Vx_to_Vx_and_Vy) {
+TEST_F(executor_test, 8_AND_set_V0xF_to_V0xF_and_Vy) {
   execute(0x8542);
 
   ASSERT_EQ(0x4, memory.V[5]);
 }
 
-TEST_F(executor_test, 8_XOR_set_Vx_to_Vx_xor_Vy) {
+TEST_F(executor_test, 8_XOR_set_V0xF_to_V0xF_xor_Vy) {
   execute(0x8543);
 
   ASSERT_EQ(0x1, memory.V[5]);
 }
 
-TEST_F(executor_test, 8_ADD_set_Vx_to_Vx_plus_Vy_set_VF_to_carry_0) {
+TEST_F(executor_test, 8_ADD_set_V0xF_to_V0xF_plus_Vy_set_V0xF_to_carry_0) {
   execute(0x8AB4);
 
   ASSERT_EQ(0x15, memory.V[0xA]);
-  ASSERT_EQ(0x0, memory.VF);
+  ASSERT_EQ(0x0, memory.V[0xF]);
 }
 
-TEST_F(executor_test, 8_ADD_set_Vx_to_Vx_plus_Vy_set_VF_to_carry_1) {
+TEST_F(executor_test, 8_ADD_set_V0xF_to_V0xF_plus_Vy_set_V0xF_to_carry_1) {
   memory.V[0xA] = 0xFF;
 
   execute(0x8AB4);
 
   ASSERT_EQ(0xA, memory.V[0xA]);
-  ASSERT_EQ(0x1, memory.VF);
+  ASSERT_EQ(0x1, memory.V[0xF]);
 }
 
-TEST_F(executor_test, 8_SUB_set_Vx_to_Vx_minux_Vy_set_VF_to_carry_1) {
+TEST_F(executor_test, 8_SUB_set_V0xF_to_V0xF_minux_Vy_set_V0xF_to_carry_1) {
   execute(0x8545);
 
   ASSERT_EQ(0x1, memory.V[5]);
-  ASSERT_EQ(0x1, memory.VF);
+  ASSERT_EQ(0x1, memory.V[0xF]);
 }
 
-TEST_F(executor_test, 8_SUB_set_Vx_to_Vx_minux_Vy_set_VF_to_carry_0) {
+TEST_F(executor_test, 8_SUB_set_V0xF_to_V0xF_minux_Vy_set_V0xF_to_carry_0) {
   execute(0x8455);
 
   ASSERT_EQ(0xFF, memory.V[4]);
-  ASSERT_EQ(0x0, memory.VF);
+  ASSERT_EQ(0x0, memory.V[0xF]);
 }
 
-TEST_F(executor_test, 8_SHR_set_Vx_to_Vx_SHR_1_and_VF_0) {
+TEST_F(executor_test, 8_SHR_set_V0xF_to_V0xF_SHR_1_and_V0xF_0) {
   execute(0x8456);
 
   ASSERT_EQ(2, memory.V[4]);
-  ASSERT_EQ(0, memory.VF);
+  ASSERT_EQ(0, memory.V[0xF]);
 }
 
-TEST_F(executor_test, 8_SHR_set_Vx_to_Vx_SHR_1_and_VF_1) {
+TEST_F(executor_test, 8_SHR_set_V0xF_to_V0xF_SHR_1_and_V0xF_1) {
   execute(0x8356);
 
   ASSERT_EQ(1, memory.V[3]);
-  ASSERT_EQ(1, memory.VF);
+  ASSERT_EQ(1, memory.V[0xF]);
 }
 
-TEST_F(executor_test, 8_SUBN_set_Vx_to_Vy_minus_Vx_set_VF_Not_bottow_0) {
+TEST_F(executor_test, 8_SUBN_set_V0xF_to_Vy_minus_V0xF_set_V0xF_Not_bottow_0) {
   execute(0x8547);
 
   ASSERT_EQ(0x1, memory.V[5]);
-  ASSERT_EQ(0, memory.VF);
+  ASSERT_EQ(0, memory.V[0xF]);
 }
 
-TEST_F(executor_test, 8_SUBN_set_Vx_to_Vy_minus_Vx_set_VF_Not_bottow_1) {
+TEST_F(executor_test, 8_SUBN_set_V0xF_to_Vy_minus_V0xF_set_V0xF_Not_bottow_1) {
   execute(0x8457);
 
   ASSERT_EQ(0xFF, memory.V[4]);
-  ASSERT_EQ(1, memory.VF);
+  ASSERT_EQ(1, memory.V[0xF]);
 }
 
-TEST_F(executor_test, 8_SHL_set_Vx_to_Vx_SHL_1_0) {
+TEST_F(executor_test, 8_SHL_set_V0xF_to_V0xF_SHL_1_0) {
   execute(0x887E);
 
   ASSERT_EQ(0x10, memory.V[8]);
-  ASSERT_EQ(0, memory.VF);
+  ASSERT_EQ(0, memory.V[0xF]);
 }
 
-TEST_F(executor_test, 8_SHL_set_Vx_to_Vx_SHL_1_1) {
+TEST_F(executor_test, 8_SHL_set_V0xF_to_V0xF_SHL_1_1) {
   memory.V[8] = 0xF0;
 
   execute(0x887E);
 
   ASSERT_EQ(0xE0, memory.V[8]);
-  ASSERT_EQ(1, memory.VF);
+  ASSERT_EQ(1, memory.V[0xF]);
 }
 
-TEST_F(executor_test, 9_SNE_skip_next_instruction_if_Vx_neq_Vy_true) {
+TEST_F(executor_test, 9_SNE_skip_next_instruction_if_V0xF_neq_Vy_true) {
   execute(0x9450);
 
   ASSERT_EQ(0x2, memory.PC);
 }
 
-TEST_F(executor_test, 9_SNE_skip_next_instruction_if_Vx_neq_Vy_false) {
+TEST_F(executor_test, 9_SNE_skip_next_instruction_if_V0xF_neq_Vy_false) {
   execute(0x9440);
 
   ASSERT_EQ(0x0, memory.PC);
@@ -249,7 +249,7 @@ TEST_F(executor_test, B_JP_jump_to_location_nnn_plus_V0) {
   ASSERT_EQ(0x128, memory.PC);
 }
 
-TEST_F(executor_test, C_RND_set_Vx_to_random_byte_AND_kk) {
+TEST_F(executor_test, C_RND_set_V0xF_to_random_byte_AND_kk) {
   execute(0xC500);
 
   ASSERT_EQ(0x0, memory.V[5]);
@@ -263,13 +263,13 @@ TEST_F(executor_test, D_DRW_display_n_byte_sprite) {
 }
 */
 
-TEST_F(executor_test, E_SKP_skip_next_instruction_if_key_with_value_f_Vx_is_pressed_false) {
+TEST_F(executor_test, E_SKP_skip_next_instruction_if_key_with_value_f_V0xF_is_pressed_false) {
   execute(0xE59E);
 
   EXPECT_EQ(0, memory.PC);
 }
 
-TEST_F(executor_test, E_SKP_skip_next_instruction_if_key_with_value_f_Vx_is_pressed_true) {
+TEST_F(executor_test, E_SKP_skip_next_instruction_if_key_with_value_f_V0xF_is_pressed_true) {
   memory.Keypad[5] = 1;
 
   execute(0xE59E);
@@ -277,7 +277,7 @@ TEST_F(executor_test, E_SKP_skip_next_instruction_if_key_with_value_f_Vx_is_pres
   EXPECT_EQ(2, memory.PC);
 }
 
-TEST_F(executor_test, E_SKNP_skip_next_instruction_if_key_with_value_f_Vx_is_not_pressed_false) {
+TEST_F(executor_test, E_SKNP_skip_next_instruction_if_key_with_value_f_V0xF_is_not_pressed_false) {
   memory.Keypad[5] = 1;
 
   execute(0xE5A1);
@@ -285,13 +285,13 @@ TEST_F(executor_test, E_SKNP_skip_next_instruction_if_key_with_value_f_Vx_is_not
   EXPECT_EQ(0, memory.PC);
 }
 
-TEST_F(executor_test, E_SKNP_skip_next_instruction_if_key_with_value_f_Vx_is_not_pressed_true) {
+TEST_F(executor_test, E_SKNP_skip_next_instruction_if_key_with_value_f_V0xF_is_not_pressed_true) {
   execute(0xE5A1);
 
   EXPECT_EQ(2, memory.PC);
 }
 
-TEST_F(executor_test, F_LD_set_Vx_to_delay_timer_value) {
+TEST_F(executor_test, F_LD_set_V0xF_to_delay_timer_value) {
   memory.DT = 0xA;
 
   execute(0xFE07);
@@ -338,7 +338,7 @@ TEST_F(executor_test, F_LD_set_I_to_location_of_sprite_for_digit_Vx) {
   EXPECT_EQ((&memory.Font[0xB * 5] - &memory.Raw[0]), memory.I);
 }
 
-TEST_F(executor_test, F_LD_store_BCD_representation_of_Vx_in_memory_location_I) {
+TEST_F(executor_test, F_LD_store_BCD_representation_of_V0xF_in_memory_location_I) {
   memory.I = 119;
   memory.V[9] = 234;
 
@@ -349,7 +349,7 @@ TEST_F(executor_test, F_LD_store_BCD_representation_of_Vx_in_memory_location_I) 
   EXPECT_EQ(4, memory.Raw[121]);
 }
 
-TEST_F(executor_test, F_LD_store_registers_V0_through_Vx_in_memory_starting_at_location_I) {
+TEST_F(executor_test, F_LD_store_registers_V0xF_through_V0xF_in_memory_starting_at_location_I) {
   memory.I = 123;
 
   execute(0xF355);
@@ -362,7 +362,7 @@ TEST_F(executor_test, F_LD_store_registers_V0_through_Vx_in_memory_starting_at_l
   EXPECT_EQ(0x0, memory.Raw[127]);
 }
 
-TEST_F(executor_test, F_LD_read_registers_V0_throu_Vx_from_memory_starting_at_location_I) {
+TEST_F(executor_test, F_LD_read_registers_V0xF_throu_V0xF_from_memory_starting_at_location_I) {
   memory.I = 102;
   memory.Raw[102] = 5;
   memory.Raw[103] = 4;

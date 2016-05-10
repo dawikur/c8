@@ -85,6 +85,7 @@ size_t Chip8::filesize(std::string const& file) {
 }
 
 void Chip8::start() {
+  _execute(Opcode{0x00E0}, _memory, _getKey, _redraw);
   _running = true;
   _memory.PC = 0x200;
   _worker = std::thread{&Chip8::main, this};

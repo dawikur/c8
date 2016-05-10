@@ -37,19 +37,19 @@ Executor::Executor() : _lookupTable {
     Case( 0x2, AND,    M.V[O.x] = M.V[O.x] & M.V[O.y]              );
     Case( 0x3, XOR,    M.V[O.x] = M.V[O.x] ^ M.V[O.y]              );
     Case( 0x4, ADD,  { Word ret = M.V[O.x] + M.V[O.y];
-                       M.VF = (ret > 255 ? 0x01 : 0x00);
+                       M.V[0xF] = (ret > 255 ? 0x01 : 0x00);
                        M.V[O.x] = static_cast<Byte>(ret); }
     );
-    Case( 0x5, SUB,  { M.VF = (M.V[O.x] > M.V[O.y] ? 0x01 : 0x00);
+    Case( 0x5, SUB,  { M.V[0xF] = (M.V[O.x] > M.V[O.y] ? 0x01 : 0x00);
                        M.V[O.x] = M.V[O.x] - M.V[O.y]; }
     );
-    Case( 0x6, SHR,  { M.VF = (M.V[O.x] & 0x01);
+    Case( 0x6, SHR,  { M.V[0xF] = (M.V[O.x] & 0x01);
                        M.V[O.x] >>= 1; }
     );
-    Case( 0x7, SUBN, { M.VF = (M.V[O.y] > M.V[O.x] ? 0x01 : 0x00);
+    Case( 0x7, SUBN, { M.V[0xF] = (M.V[O.y] > M.V[O.x] ? 0x01 : 0x00);
                        M.V[O.x] = M.V[O.x] - M.V[O.y]; }
     );
-    Case( 0xE, SHL,  { M.VF = (M.V[O.x] & 0x80 ? 0x01 : 0x00);
+    Case( 0xE, SHL,  { M.V[0xF] = (M.V[O.x] & 0x80 ? 0x01 : 0x00);
                        M.V[O.x] <<= 1; }
     );
   }),
@@ -67,7 +67,7 @@ Executor::Executor() : _lookupTable {
         kk |= put( ((x)%64 + (y+p)%32 * 64) / 8, M.Raw[M.I+p] >> (x%8) )
            |  put( ((x+7)%64 + (y+p)%32 * 64) / 8, M.Raw[M.I+p] << (8 - x%8) );
     }
-    M.VF = (kk != 0);
+    M.V[0xF] = (kk != 0);
     redraw();
   },
   Switch   (E, kk,   {
