@@ -101,8 +101,9 @@ void Chip8::stop() {
 void Chip8::main() {
   while (_running) {
     auto const opcode = fetch();
-    tick();
+  _memory.PC += 2;
     _execute(Opcode{opcode}, _memory, _getKey, _redraw);
+    tick();
     wait();
   }
 }
@@ -112,7 +113,6 @@ Word Chip8::fetch() {
 }
 
 void Chip8::tick() {
-  _memory.PC += 2;
   if (_memory.ST > 0) {
     --_memory.ST;
   }
