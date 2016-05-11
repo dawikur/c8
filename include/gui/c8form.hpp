@@ -33,6 +33,7 @@ class C8form : public nana::form {
  private:
   void createMenubar();
   void connectToKeyboardEvents();
+  void connectToDragDropEvents();
   void keyboardEvent(nana::arg_keyboard const &, Byte const);
 
   nana::menubar _menubar;

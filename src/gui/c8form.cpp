@@ -19,6 +19,7 @@ C8form::C8form(Byte const *const display)
 
   createMenubar();
   connectToKeyboardEvents();
+  connectToDragDropEvents();
 }
 
 void C8form::exec() {
@@ -76,6 +77,12 @@ void C8form::connectToKeyboardEvents() {
 
   events().key_release(
     [this](nana::arg_keyboard const &arg) { keyboardEvent(arg, 0x00); });
+}
+
+void C8form::connectToDragDropEvents() {
+  events().mouse_dropfiles([this](nana::arg_dropfiles const &arg) {
+    _fileChoosen(arg.files.front());
+  });
 }
 
 void C8form::keyboardEvent(nana::arg_keyboard const &arg,

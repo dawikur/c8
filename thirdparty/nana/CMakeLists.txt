@@ -6,6 +6,7 @@ INCLUDE(ExternalProject)
 
 ExternalProject_Add(nana
   GIT_REPOSITORY https://github.com/cnjinhao/nana.git
+  GIT_TAG hotfix-1.3
   CMAKE_ARGS -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG:PATH=DebugLibs
              -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE:PATH=ReleaseLibs
              -DCMAKE_CXX_FLAGS=${MSVC_COMPILER_DEFS}
