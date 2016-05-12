@@ -11,10 +11,10 @@
 
 #include <nana/gui.hpp>
 #include <nana/gui/widgets/form.hpp>
-#include <nana/gui/widgets/menubar.hpp>
 
 #include "callbacks.hpp"
 #include "gui/display.hpp"
+#include "gui/menubar.hpp"
 #include "type.hpp"
 
 namespace gui {
@@ -36,10 +36,10 @@ class C8form : public nana::form {
 
   void keyboardEvent(nana::arg_keyboard const &, Byte const);
 
-  nana::menubar _menubar;
   FileChoosen _fileChoosen;
   KeyEvent _keyEvent;
 
+  Menubar _menubar;
   Display _display;
 };
 
