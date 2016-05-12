@@ -16,10 +16,9 @@
 namespace chip {
 
 Chip8::Chip8(unsigned const clock)
-  : Worker{clock}
-  , _memory{}
-  , _execute{}
-  , _getKey{[]() { return 0; }} {}
+  : Worker{clock}, _memory{}, _execute{}, _getKey{[]() { return 0; }} {
+  initFont();
+}
 
 void Chip8::getKey(GetKey const &callback) {
   _getKey = callback;
@@ -36,6 +35,32 @@ KeyEvent Chip8::keyEventCallback() {
 
 Byte const *const Chip8::getDisplay() {
   return _memory.Display;
+}
+
+void Chip8::initFont() {
+  auto* p = _memory.Font;
+  for (auto f : {0xF999F,
+                 0x72262,
+                 0xF8F1F,
+                 0xF1F1F,
+                 0x11F99,
+                 0xF1F8F,
+                 0xF9F8F,
+                 0x4421F,
+                 0xF9F9F,
+                 0xF1F9F,
+                 0x99F9F,
+                 0xE9E9E,
+                 0xF888F,
+                 0xE999E,
+                 0xF8F8F,
+                 0x88F8F}) {
+    for (auto i = 0; i < 5; ++i) {
+      *p = (f & 0xF) << 4;
+      ++p;
+      f >>= 4;
+    }
+  }
 }
 
 void Chip8::load(std::string const &file) {

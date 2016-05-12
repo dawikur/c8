@@ -24,6 +24,7 @@ class Chip8 : public Worker {
   Byte const *const getDisplay();
 
  private:
+  void initFont();
   void load(std::string const &);
   void keyEvent(wchar_t const key, Byte const isPressed);
 
