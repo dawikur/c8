@@ -35,10 +35,6 @@ void C8form::keyEvent(KeyEvent const &callback) {
   _keyEvent = callback;
 }
 
-Redraw C8form::redrawCallback() {
-  return [this]() { _display.update(); };
-}
-
 void C8form::createMenubar() {
   _menubar.bgcolor(nana::colors::white);
 

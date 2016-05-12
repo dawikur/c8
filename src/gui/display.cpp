@@ -6,18 +6,21 @@
 namespace gui {
 
 Display::Display(Byte const *const memory,
-                 nana::form &form,
-                 unsigned const Width,
-                 unsigned const Height)
-  : Width{Width}
-  , Height{Height}
+                 nana::form const &form,
+                 unsigned const width,
+                 unsigned const height,
+                 unsigned const clock)
+  : Worker{clock}
+  , Width{width}
+  , Height{height}
   , _memory{memory}
   , _form{form}
   , _drawer{_form} {
   _drawer.draw([this](nana::paint::graphics &graphics) { draw(graphics); });
+  start();
 }
 
-void Display::update() {
+void Display::do_one() {
   _drawer.update();
 }
 
@@ -45,7 +48,7 @@ void Display::draw(nana::paint::graphics &graphics) {
   }
 }
 
-Display::Area Display::getArea() {
+Display::Area Display::getArea() const {
   auto constexpr topOffset = 28;
 
   auto const fullSize = _form.size();

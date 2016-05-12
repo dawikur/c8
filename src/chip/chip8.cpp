@@ -15,25 +15,14 @@
 
 namespace chip {
 
-Chip8::Chip8(Byte const &clock)
-  : _cycleDuration{1000 / clock}
+Chip8::Chip8(unsigned const clock)
+  : Worker{clock}
   , _memory{}
   , _execute{}
-  , _getKey{[]() { return 0; }}
-  , _redraw{[]() {}}
-  , _running{false}
-  , _worker{} {}
-
-Chip8::~Chip8() {
-  stop();
-}
+  , _getKey{[]() { return 0; }} {}
 
 void Chip8::getKey(GetKey const &callback) {
   _getKey = callback;
-}
-
-void Chip8::redraw(Redraw const &callback) {
-  _redraw = callback;
 }
 
 FileChoosen Chip8::fileChoosenCallback() {
@@ -61,6 +50,9 @@ void Chip8::load(std::string const &file) {
     _memory.Raw[position++] = input.get();
   }
 
+  _execute(Opcode{0x00E0}, _memory, _getKey);
+  _memory.PC = 0x200;
+
   start();
 }
 
@@ -84,32 +76,16 @@ size_t Chip8::filesize(std::string const& file) {
   return in.tellg();
 }
 
-void Chip8::start() {
-  _execute(Opcode{0x00E0}, _memory, _getKey, _redraw);
-  _running = true;
-  _memory.PC = 0x200;
-  _worker = std::thread{&Chip8::main, this};
-}
-
-void Chip8::stop() {
-  _running = false;
-  if (_worker.joinable()) {
-    _worker.join();
-  }
-}
-
-void Chip8::main() {
-  while (_running) {
-    auto const opcode = fetch();
-    _memory.PC += 2;
-    _execute(Opcode{opcode}, _memory, _getKey, _redraw);
-    tick();
-    wait();
-  }
+void Chip8::do_one() {
+  auto const opcode = fetch();
+  _execute(Opcode{opcode}, _memory, _getKey);
+  tick();
 }
 
 Word Chip8::fetch() {
-  return _memory.Raw[_memory.PC] << 8 | _memory.Raw[_memory.PC + 1];
+  Word opcode = _memory.Raw[_memory.PC++] << 8;
+  opcode |= _memory.Raw[_memory.PC++];
+  return opcode;
 }
 
 void Chip8::tick() {
@@ -119,19 +95,6 @@ void Chip8::tick() {
   if (_memory.DT > 0) {
     --_memory.DT;
   }
-}
-
-void Chip8::wait() {
-  static auto lastEntry = std::chrono::system_clock::now();
-
-  auto const newEntry = std::chrono::system_clock::now();
-  auto const lastCycleDuration = newEntry - lastEntry;
-
-  if (lastCycleDuration < _cycleDuration) {
-    std::this_thread::sleep_for(_cycleDuration - lastCycleDuration);
-  }
-
-  lastEntry = newEntry;
 }
 
 }  // namespace chip

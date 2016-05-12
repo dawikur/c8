@@ -28,8 +28,6 @@ class C8form : public nana::form {
   void fileChoosen(FileChoosen const &callback);
   void keyEvent(KeyEvent const &callback);
 
-  Redraw redrawCallback();
-
  private:
   void createMenubar();
   void connectToKeyboardEvents();

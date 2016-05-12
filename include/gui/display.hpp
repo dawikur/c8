@@ -11,19 +11,20 @@
 #include <nana/gui/widgets/form.hpp>
 
 #include "type.hpp"
+#include "worker.hpp"
 
 namespace gui {
 
-class Display {
+class Display : public Worker {
  public:
   explicit Display(Byte const *const memory,
-                   nana::form &form,
-                   unsigned const Width = 64,
-                   unsigned const Height = 32);
-
-  void update();
+                   nana::form const &form,
+                   unsigned const width = 64,
+                   unsigned const height = 32,
+                   unsigned const clock = 60);
 
  private:
+  void do_one() override;
   void draw(nana::paint::graphics &graphics);
 
   struct Area {
@@ -33,13 +34,13 @@ class Display {
 
     nana::rectangle getBorder() const;
   };
-  Area getArea();
+  Area getArea() const;
 
   unsigned const Width;
   unsigned const Height;
 
   Byte const *const _memory;
-  nana::form &_form;
+  nana::form const &_form;
   nana::drawing _drawer;
 };
 

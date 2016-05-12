@@ -12,7 +12,6 @@ int main(int argc, char *argv[]) {
     gui::C8form form{chip8.getDisplay()};
 
     //chip8.getKey();
-    chip8.redraw(form.redrawCallback());
     form.fileChoosen(chip8.fileChoosenCallback());
     form.keyEvent(chip8.keyEventCallback());
 

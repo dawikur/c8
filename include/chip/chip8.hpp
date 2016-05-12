@@ -3,23 +3,20 @@
 #ifndef INCLUDE_CHIP_CHIP8_HPP_
 #define INCLUDE_CHIP_CHIP8_HPP_
 
-#include <atomic>
 #include <string>
-#include <thread>
 
 #include "callbacks.hpp"
 #include "chip/executor.hpp"
 #include "chip/memory.hpp"
+#include "worker.hpp"
 
 namespace chip {
 
-class Chip8 {
+class Chip8 : public Worker {
  public:
-  explicit Chip8(Byte const &clock = 60);
-  ~Chip8();
+  explicit Chip8(unsigned const clock = 256);
 
   void getKey(GetKey const &callback);
-  void redraw(Redraw const &callback);
 
   FileChoosen fileChoosenCallback();
   KeyEvent keyEventCallback();
@@ -31,24 +28,14 @@ class Chip8 {
   void keyEvent(wchar_t const key, Byte const isPressed);
 
   size_t filesize(std::string const&);
-  void start();
-  void stop();
-  void main();
+  void do_one() override;
 
   Word fetch();
   void tick();
-  void wait();
-
-  using Duration = std::chrono::milliseconds;
-  Duration _cycleDuration;
 
   Memory _memory;
   Executor _execute;
   GetKey _getKey;
-  Redraw _redraw;
-
-  std::atomic_bool _running;
-  std::thread _worker;
 };
 
 }  // namespace chip
