@@ -23,6 +23,8 @@ class Display : public Worker {
                    unsigned const height = 32,
                    unsigned const clock = 60);
 
+  void theme(nana::color const fg, nana::color const bg);
+
  private:
   void do_one() override;
   void draw(nana::paint::graphics &graphics);
@@ -38,6 +40,12 @@ class Display : public Worker {
 
   unsigned const Width;
   unsigned const Height;
+
+  struct {
+    nana::color get(Byte const bit) { return bit ? fg : bg; };
+
+    nana::color fg, bg;
+  } _theme;
 
   Byte const *const _memory;
   nana::form const &_form;

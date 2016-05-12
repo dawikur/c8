@@ -13,6 +13,7 @@ Display::Display(Byte const *const memory,
   : Worker{clock}
   , Width{width}
   , Height{height}
+  , _theme{nana::colors::black, nana::colors::white}
   , _memory{memory}
   , _form{form}
   , _drawer{_form} {
@@ -33,9 +34,6 @@ void Display::draw(nana::paint::graphics &graphics) {
     for (int x = 0; x < Width; ++x) {
       auto const pos = x + (y * Width);
       auto const bit = (_memory[pos/8] >> (7- pos%8)) & 0x01;
-      if (bit == 0x0) {
-        continue;
-      }
 
       graphics.rectangle(
         nana::rectangle{static_cast<int>(area.x + x * area.dx),
@@ -43,9 +41,15 @@ void Display::draw(nana::paint::graphics &graphics) {
                         area.dx,
                         area.dy},
         true,
-        nana::colors::black);
+        _theme.get(bit));
     }
   }
+}
+
+void Display::theme(nana::color const fg, nana::color const bg) {
+  _theme.fg = fg;
+  _theme.bg = bg;
+  do_one();
 }
 
 Display::Area Display::getArea() const {
