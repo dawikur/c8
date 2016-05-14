@@ -13,6 +13,7 @@
 
 #include "type.hpp"
 #include "worker.hpp"
+#include "hqx/hqx.hpp"
 
 namespace gui {
 
@@ -50,7 +51,7 @@ class Display : public Worker {
     std::atomic<nana::color> fg, bg;
   } _color;
 
-  Byte const *const _memory;
+  Hqx _hqx;
   nana::form const &_form;
   nana::drawing _drawer;
 };

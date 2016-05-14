@@ -12,8 +12,7 @@ add_dependencies(${PROJECT_EMULATOR_NAME} hqx)
 add_dependencies(${PROJECT_EMULATOR_NAME} nana)
 
 if(NOT WIN32)
-  target_link_libraries(${PROJECT_EMULATOR_NAME}
-    ${NANA_LIBS_DIR}/libnana.a)
+  target_link_libraries(${PROJECT_EMULATOR_NAME} ${NANA_LIBS_DIR}/libnana.a)
   target_link_libraries(${PROJECT_EMULATOR_NAME} X11 rt Xft atomic)
 else()
   target_link_libraries(${PROJECT_EMULATOR_NAME}

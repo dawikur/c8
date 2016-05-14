@@ -3,6 +3,8 @@
 #include "gui/display.hpp"
 #include "hqx/hqx.hpp"
 
+#include <iostream>
+
 namespace gui {
 
 Display::Display(Byte const *const memory,
@@ -12,7 +14,7 @@ Display::Display(Byte const *const memory,
   , _height{Height}
   , _scale{}
   , _color{}
-  , _memory{memory}
+  , _hqx{memory, Width, Height}
   , _form{form}
   , _drawer{_form} {
   _drawer.draw([this](nana::paint::graphics &graphics) { draw(graphics); });
@@ -27,13 +29,14 @@ void Display::do_one() {
 
 void Display::draw(nana::paint::graphics &graphics) {
   auto const area = getArea();
+  auto const& data = _hqx.rescale(_scale);
 
   graphics.rectangle(area.getBorder(), false, nana::colors::black);
 
   for (int y = 0; y < _height; ++y) {
     for (int x = 0; x < _width; ++x) {
       auto const pos = x + (y * _width);
-      auto const bit = (_memory[pos / 8] >> (7 - pos % 8)) & 0x01;
+      auto const bit = data[pos];
 
       graphics.rectangle(
         nana::rectangle{static_cast<int>(area.x + x * area.dx),

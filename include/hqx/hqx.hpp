@@ -7,14 +7,24 @@
 
 #include "type.hpp"
 
-namespace hqx {
+class Hqx {
+ public:
+  using Buffer = std::vector<uint32_t>;
 
-std::vector<uint32_t> rescale(Byte const *const memory,
-                              unsigned const width,
-                              unsigned const height,
-                              unsigned const scale);
+  Hqx(Byte const * const memory, unsigned const width, unsigned const height);
 
-}  // namespace hqx
+  Buffer const &rescale(unsigned const scale);
+
+ private:
+  void convertMemoryToInput();
+
+  Buffer _input;
+  Buffer _output;
+
+  Byte const * const _memory;
+  unsigned const _width;
+  unsigned const _height;
+};
 
 #endif  // INCLUDE_HQX_HQX_HPP_
 

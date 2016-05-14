@@ -4,34 +4,42 @@
 
 #include <hqx-1.1/src/hqx.h>
 
+#include <hqx-1.1/src/init.c>
+#include <hqx-1.1/src/hq2x.c>
+#include <hqx-1.1/src/hq3x.c>
+#include <hqx-1.1/src/hq4x.c>
+
 #include <vector>
 
-namespace hqx {
-
-namespace {
-
-uint32_t convert(Byte const bit) {
-  return (bit ? 0x00FFFFFF : 0x00000000);
+Hqx::Hqx(Byte const *const memory, unsigned const width, unsigned const height)
+  : _input(width * height)
+  , _output(width * 4 * height * 4)
+  , _memory{memory}
+  , _width{width}
+  , _height{height} {
+  hqxInit();
 }
 
-}  // namespace
+std::vector<uint32_t> const &Hqx::rescale(unsigned const scale) {
+  convertMemoryToInput();
 
-std::vector<uint32_t> rescale(Byte const *const memory,
-                          unsigned const width,
-                          unsigned const height,
-                          unsigned const scale) {
-  std::vector<uint32_t> input{width * height};
-
-  for (int y = 0; y < height; ++y) {
-    for (int x = 0; x < width; ++x) {
-      auto const pos = x + (y * width);
-      auto const bit = (memory[pos / 8] >> (7 - pos % 8)) & 0x01;
-
-      input[pos] = convert(bit);
-    }
+  switch (scale) {
+    case 1: return _input;
+    case 2: hq2x_32(_input.data(), _output.data(), _width, _height); break;
+    case 3: hq3x_32(_input.data(), _output.data(), _width, _height); break;
+    case 4: hq4x_32(_input.data(), _output.data(), _width, _height); break;
   }
 
-  return input;
+  return _output;
 }
 
-}  // namespace hqx
+void Hqx::convertMemoryToInput() {
+  for (int y = 0; y < _height; ++y) {
+    for (int x = 0; x < _width; ++x) {
+      auto const pos = x + (y * _width);
+      auto const bit = (_memory[pos / 8] >> (7 - pos % 8)) & 0x01;
+      _input[pos] = (bit ? 0x000000FF : 0x00000000);
+    }
+  }
+}
+
