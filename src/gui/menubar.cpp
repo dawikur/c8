@@ -19,11 +19,16 @@ void Menubar::themeChoosen(ThemeChoosen const &callback) {
   _themeChoosen = callback;
 }
 
+void Menubar::clockChoosen(ClockChoosen const &callback) {
+  _clockChoosen = callback;
+}
+
 void Menubar::createMenubar() {
   _menubar.bgcolor(nana::colors::white);
 
   createFileMenu();
   createViewMenu();
+  createSettingsMenu();
   createHelpMenu();
 }
 
@@ -48,10 +53,9 @@ void Menubar::createViewMenu() {
   themeMenu->append(
     "Matrix", [=](auto &) { _themeChoosen(colors::lime, colors::black); });
 
-  themeMenu->check_style(0, nana::menu::checks::option);
-  themeMenu->check_style(1, nana::menu::checks::option);
-  themeMenu->check_style(2, nana::menu::checks::option);
-
+  for (size_t i = 0; i < themeMenu->size(); ++i) {
+    themeMenu->check_style(i, nana::menu::checks::option);
+  }
   themeMenu->checked(0, true);
 }
 
@@ -60,6 +64,16 @@ void Menubar::createSettingsMenu() {
   menu.append("Clock");
   auto *clockMenu = menu.create_sub_menu(0);
 
+  clockMenu->append("64Hz", [=](auto &) { _clockChoosen(64); });
+  clockMenu->append("128Hz", [=](auto &) { _clockChoosen(128); });
+  clockMenu->append("256Hz", [=](auto &) { _clockChoosen(256); });
+  clockMenu->append("512Hz", [=](auto &) { _clockChoosen(512); });
+  clockMenu->append("1024Hz", [=](auto &) { _clockChoosen(1024); });
+
+  for (size_t i = 0; i < clockMenu->size(); ++i) {
+    clockMenu->check_style(i, nana::menu::checks::option);
+  }
+  clockMenu->checked(2, true);
 }
 
 void Menubar::createHelpMenu() {

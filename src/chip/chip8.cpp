@@ -28,6 +28,10 @@ FileChoosen Chip8::fileChoosenCallback() {
   return [this](std::string const &file) { load(file); };
 }
 
+ClockChoosen Chip8::clockChoosenCallback() {
+  return [this](unsigned const clock) { setClock(clock); };
+}
+
 KeyEvent Chip8::keyEventCallback() {
   return
     [this](wchar_t const key, Byte const isPressed) { keyEvent(key, isPressed); };

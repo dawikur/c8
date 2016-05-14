@@ -13,6 +13,7 @@ int main(int argc, char *argv[]) {
 
     //chip8.getKey();
     form.fileChoosen(chip8.fileChoosenCallback());
+    form.clockChoosen(chip8.clockChoosenCallback());
     form.keyEvent(chip8.keyEventCallback());
 
     if (argc > 1) {

@@ -26,6 +26,7 @@ class Menubar {
 
   void fileChoosen(FileChoosen const &callback);
   void themeChoosen(ThemeChoosen const &callback);
+  void clockChoosen(ClockChoosen const &callback);
 
  private:
   void createMenubar();
@@ -37,8 +38,18 @@ class Menubar {
   void openFile();
   void showAbout();
 
+  template <typename Callback, class... Args>
+  void addRadioButton(nana::menu *dst,
+                      std::string const &name,
+                      Callback const &callback,
+                      Args const &... args) {
+    dst->append(name, [=](auto &) { callback(args...); });
+    dst->check_style(dst->size() - 1, nana::menu::checks::option);
+  }
+
   FileChoosen _fileChoosen;
   ThemeChoosen _themeChoosen;
+  ClockChoosen _clockChoosen;
 
   nana::form const &_form;
   nana::menubar _menubar;

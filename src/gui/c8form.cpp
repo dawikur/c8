@@ -33,6 +33,10 @@ void C8form::fileChoosen(FileChoosen const &callback) {
   _menubar.fileChoosen(callback);
 }
 
+void C8form::clockChoosen(ClockChoosen const &callback) {
+  _menubar.clockChoosen(callback);
+}
+
 void C8form::keyEvent(KeyEvent const &callback) {
   _keyEvent = callback;
 }

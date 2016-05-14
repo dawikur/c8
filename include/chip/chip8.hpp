@@ -19,6 +19,7 @@ class Chip8 : public Worker {
   void getKey(GetKey const &callback);
 
   FileChoosen fileChoosenCallback();
+  ClockChoosen clockChoosenCallback();
   KeyEvent keyEventCallback();
 
   Byte const *const getDisplay();

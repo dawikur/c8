@@ -26,6 +26,7 @@ class C8form : public nana::form {
   void exec();
 
   void fileChoosen(FileChoosen const &callback);
+  void clockChoosen(ClockChoosen const &callback);
   void keyEvent(KeyEvent const &callback);
 
  private:

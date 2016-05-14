@@ -8,6 +8,7 @@
 
 #include "type.hpp"
 
+using ClockChoosen = std::function<void(unsigned const)>;
 using FileChoosen = std::function<void(std::string const &)>;
 using GetKey = std::function<Byte()>;
 using KeyEvent = std::function<void(wchar_t const key, Byte const isPressed)>;
