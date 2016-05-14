@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 25
+/svn/!svn/ver/4/trunk/src
+END
+hqx.c
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/!svn/ver/10/trunk/src/hqx.c
+END
+hq2x.c
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/11/trunk/src/hq2x.c
+END
+hq3x.c
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/11/trunk/src/hq3x.c
+END
+init.c
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/!svn/ver/2/trunk/src/init.c
+END
+hq4x.c
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/11/trunk/src/hq4x.c
+END
+hqx.h
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/!svn/ver/12/trunk/src/hqx.h
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/2/trunk/src/Makefile.am
+END
+common.h
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/11/trunk/src/common.h
+END

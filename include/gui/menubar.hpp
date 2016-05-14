@@ -19,6 +19,7 @@ namespace gui {
 
 using ThemeChoosen =
   std::function<void(nana::color const fg, nana::color const bg)>;
+using ScaleChoosen = std::function<void(size_t const)>;
 
 class Menubar {
  public:
@@ -26,13 +27,17 @@ class Menubar {
 
   void fileChoosen(FileChoosen const &callback);
   void themeChoosen(ThemeChoosen const &callback);
+  void scaleChoosen(ScaleChoosen const &callback);
   void clockChoosen(ClockChoosen const &callback);
 
  private:
   void createMenubar();
   void createFileMenu();
   void createViewMenu();
+  void createThemeViewMenu(nana::menu &, size_t const);
+  void createScaleViewMenu(nana::menu &, size_t const);
   void createSettingsMenu();
+  void createClockSettingsMenu(nana::menu &);
   void createHelpMenu();
 
   void openFile();
@@ -49,6 +54,7 @@ class Menubar {
 
   FileChoosen _fileChoosen;
   ThemeChoosen _themeChoosen;
+  ScaleChoosen _scaleChoosen;
   ClockChoosen _clockChoosen;
 
   nana::form const &_form;

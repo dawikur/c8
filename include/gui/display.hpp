@@ -19,12 +19,10 @@ namespace gui {
 class Display : public Worker {
  public:
   explicit Display(Byte const *const memory,
-                   nana::form const &form,
-                   unsigned const width = 64,
-                   unsigned const height = 32,
-                   unsigned const clock = 60);
+                   nana::form const &form);
 
   void theme(nana::color const fg, nana::color const bg);
+  void scale(unsigned const);
 
  private:
   void do_one() override;
@@ -39,8 +37,13 @@ class Display : public Worker {
   };
   Area getArea() const;
 
-  unsigned const Width;
-  unsigned const Height;
+  static unsigned const Clock = 60;
+  static unsigned const Width = 64;
+  static unsigned const Height = 32;
+
+  unsigned _width;
+  unsigned _height;
+  unsigned _scale;
 
   struct {
     nana::color operator()(Byte const bit) { return bit ? fg : bg; };

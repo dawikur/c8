@@ -19,6 +19,10 @@ void Menubar::themeChoosen(ThemeChoosen const &callback) {
   _themeChoosen = callback;
 }
 
+void Menubar::scaleChoosen(ScaleChoosen const &callback) {
+  _scaleChoosen = callback;
+}
+
 void Menubar::clockChoosen(ClockChoosen const &callback) {
   _clockChoosen = callback;
 }
@@ -40,11 +44,16 @@ void Menubar::createFileMenu() {
 }
 
 void Menubar::createViewMenu() {
+  auto &menu = _menubar.push_back("View");
+  createThemeViewMenu(menu, 0);
+  createScaleViewMenu(menu, 1);
+}
+
+void Menubar::createThemeViewMenu(nana::menu &menu, size_t const id) {
   using nana::colors;
 
-  auto &menu = _menubar.push_back("View");
   menu.append("Theme");
-  auto *themeMenu = menu.create_sub_menu(0);
+  auto *themeMenu = menu.create_sub_menu(id);
 
   themeMenu->append(
     "Light", [=](auto &) { _themeChoosen(colors::black, colors::white); });
@@ -59,8 +68,27 @@ void Menubar::createViewMenu() {
   themeMenu->checked(0, true);
 }
 
+void Menubar::createScaleViewMenu(nana::menu &menu, size_t const id) {
+  menu.append("Scale");
+  auto *scaleMenu = menu.create_sub_menu(id);
+
+  scaleMenu->append("x1", [=](auto &) { _scaleChoosen(1); });
+  scaleMenu->append("x2", [=](auto &) { _scaleChoosen(2); });
+  scaleMenu->append("x3", [=](auto &) { _scaleChoosen(3); });
+  scaleMenu->append("x4", [=](auto &) { _scaleChoosen(4); });
+
+  for (size_t i = 0; i < scaleMenu->size(); ++i) {
+    scaleMenu->check_style(i, nana::menu::checks::option);
+  }
+  scaleMenu->checked(0, true);
+}
+
 void Menubar::createSettingsMenu() {
   auto &menu = _menubar.push_back("Settings");
+  createClockSettingsMenu(menu);
+}
+
+void Menubar::createClockSettingsMenu(nana::menu &menu) {
   menu.append("Clock");
   auto *clockMenu = menu.create_sub_menu(0);
 
