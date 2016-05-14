@@ -13,11 +13,12 @@ Display::Display(Byte const *const memory,
   : Worker{clock}
   , Width{width}
   , Height{height}
-  , _theme{nana::colors::black, nana::colors::white}
+  , _color{}
   , _memory{memory}
   , _form{form}
   , _drawer{_form} {
   _drawer.draw([this](nana::paint::graphics &graphics) { draw(graphics); });
+  theme(nana::colors::black, nana::colors::white);
   start();
 }
 
@@ -33,7 +34,7 @@ void Display::draw(nana::paint::graphics &graphics) {
   for (int y = 0; y < Height; ++y) {
     for (int x = 0; x < Width; ++x) {
       auto const pos = x + (y * Width);
-      auto const bit = (_memory[pos/8] >> (7- pos%8)) & 0x01;
+      auto const bit = (_memory[pos / 8] >> (7 - pos % 8)) & 0x01;
 
       graphics.rectangle(
         nana::rectangle{static_cast<int>(area.x + x * area.dx),
@@ -41,14 +42,14 @@ void Display::draw(nana::paint::graphics &graphics) {
                         area.dx,
                         area.dy},
         true,
-        _theme.get(bit));
+        _color(bit));
     }
   }
 }
 
 void Display::theme(nana::color const fg, nana::color const bg) {
-  _theme.fg = fg;
-  _theme.bg = bg;
+  _color.fg = fg;
+  _color.bg = bg;
   do_one();
 }
 
@@ -57,8 +58,9 @@ Display::Area Display::getArea() const {
 
   auto const fullSize = _form.size();
 
-  unsigned const width = (fullSize.width - 2)  / Width  * Width;
-  unsigned const height = (fullSize.height - (topOffset + 2)) / Height * Height;
+  unsigned const width = (fullSize.width - 2) / Width * Width;
+  unsigned const height =
+    (fullSize.height - (topOffset + 2)) / Height * Height;
 
   int const dx = (fullSize.width - width) / 2;
   int const dy = (fullSize.height - topOffset - height) / 2;

@@ -3,6 +3,7 @@
 #ifndef INCLUDE_GUI_DISPLAY_HPP_
 #define INCLUDE_GUI_DISPLAY_HPP_
 
+#include <atomic>
 #include <memory>                                                              // fix for nana
 #include <stdexcept>                                                           // fix for nana
 #include <vector>                                                              // fix for nana
@@ -42,10 +43,9 @@ class Display : public Worker {
   unsigned const Height;
 
   struct {
-    nana::color get(Byte const bit) { return bit ? fg : bg; };
-
-    nana::color fg, bg;
-  } _theme;
+    nana::color operator()(Byte const bit) { return bit ? fg : bg; };
+    std::atomic<nana::color> fg, bg;
+  } _color;
 
   Byte const *const _memory;
   nana::form const &_form;

@@ -12,7 +12,7 @@ add_dependencies(${PROJECT_EMULATOR_NAME} nana)
 if(NOT WIN32)
   target_link_libraries(${PROJECT_EMULATOR_NAME}
     ${NANA_LIBS_DIR}/libnana.a)
-  target_link_libraries(${PROJECT_EMULATOR_NAME} X11 rt Xft)
+  target_link_libraries(${PROJECT_EMULATOR_NAME} X11 rt Xft atomic)
 else()
   target_link_libraries(${PROJECT_EMULATOR_NAME}
     debug ${NANA_LIBS_DIR}/DebugLibs/${CMAKE_FIND_LIBRARY_PREFIXES}nana${CMAKE_FIND_LIBRARY_SUFFIXES}

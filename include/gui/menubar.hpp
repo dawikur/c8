@@ -29,6 +29,13 @@ class Menubar {
 
  private:
   void createMenubar();
+  void createFileMenu();
+  void createViewMenu();
+  void createSettingsMenu();
+  void createHelpMenu();
+
+  void openFile();
+  void showAbout();
 
   FileChoosen _fileChoosen;
   ThemeChoosen _themeChoosen;

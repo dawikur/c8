@@ -9,12 +9,11 @@
 
 class Worker {
  public:
-  Worker(unsigned const clock)
-    : _cycleDuration{1000 / clock}, _running{false}, _thread{} {}
-
-  ~Worker() {
-    stop();
+  Worker(unsigned const clock) : _cycleDuration{}, _running{false}, _thread{} {
+    setClock(clock);
   }
+
+  ~Worker() { stop(); }
 
  protected:
   virtual void do_one() = 0;
@@ -31,6 +30,10 @@ class Worker {
     }
   }
 
+  void setClock(unsigned const clock) {
+    _cycleDuration = std::chrono::milliseconds{1000 / clock};
+  }
+
  private:
   void main() {
     while (_running) {
@@ -39,11 +42,11 @@ class Worker {
       do_one();
 
       auto const end = std::chrono::system_clock::now();
-      std::this_thread::sleep_for(_cycleDuration - (end - begin));
+      std::this_thread::sleep_for(_cycleDuration.load() - (end - begin));
     }
   }
 
-  std::chrono::milliseconds const _cycleDuration;
+  std::atomic<std::chrono::milliseconds> _cycleDuration;
   std::atomic_bool _running;
   std::thread _thread;
 };

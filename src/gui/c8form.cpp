@@ -8,8 +8,8 @@ namespace gui {
 
 C8form::C8form(Byte const *const display)
   : nana::form{}
-  , _fileChoosen{[](std::string const &) {}}
-  , _keyEvent{[](char const, bool const) {}}
+  , _fileChoosen{}
+  , _keyEvent{}
   , _menubar{*this}
   , _display{display, *this} {
   caption("c8");
