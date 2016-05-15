@@ -18,6 +18,7 @@ class Debugform : public nana::form {
   void run();
 
  private:
+  void arrange();
 };
 
 }  // namespace gui
