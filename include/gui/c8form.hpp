@@ -13,6 +13,7 @@
 #include <nana/gui/widgets/form.hpp>
 
 #include "callbacks.hpp"
+#include "gui/debugform.hpp"
 #include "gui/display.hpp"
 #include "gui/menubar.hpp"
 #include "type.hpp"
@@ -42,6 +43,7 @@ class C8form : public nana::form {
 
   Menubar _menubar;
   Display _display;
+  Debugform _debug;
 };
 
 }  // namespace gui

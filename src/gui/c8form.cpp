@@ -11,17 +11,19 @@ C8form::C8form(Byte const *const display)
   , _fileChoosen{}
   , _keyEvent{}
   , _menubar{*this}
-  , _display{display, *this} {
+  , _display{display, *this}
+  , _debug{} {
   caption("c8");
   bgcolor(nana::colors::white);
 
   connectToKeyboardEvents();
   connectToDragDropEvents();
 
+  _menubar.debugChoosen([this]() { _debug.run(); });
+  _menubar.scaleChoosen([this](size_t const scale) { _display.scale(scale); });
   _menubar.themeChoosen([this](nana::color const fg, nana::color const bg) {
     _display.theme(fg, bg);
   });
-  _menubar.scaleChoosen([this](size_t const scale) { _display.scale(scale); });
 }
 
 void C8form::exec() {

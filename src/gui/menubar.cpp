@@ -11,24 +11,34 @@
 namespace gui {
 
 Menubar::Menubar(nana::form const &form)
-  : _fileChoosen{}, _themeChoosen{}, _form{form}, _menubar{_form} {
+  : _clockChoosen{}
+  , _debugChoosen{}
+  , _fileChoosen{}
+  , _scaleChoosen{}
+  , _themeChoosen{}
+  , _form{form}
+  , _menubar{_form} {
   createMenubar();
+}
+
+void Menubar::clockChoosen(ClockChoosen const &callback) {
+  _clockChoosen = callback;
+}
+
+void Menubar::debugChoosen(DebugChoosen const &callback) {
+  _debugChoosen = callback;
 }
 
 void Menubar::fileChoosen(FileChoosen const &callback) {
   _fileChoosen = callback;
 }
 
-void Menubar::themeChoosen(ThemeChoosen const &callback) {
-  _themeChoosen = callback;
-}
-
 void Menubar::scaleChoosen(ScaleChoosen const &callback) {
   _scaleChoosen = callback;
 }
 
-void Menubar::clockChoosen(ClockChoosen const &callback) {
-  _clockChoosen = callback;
+void Menubar::themeChoosen(ThemeChoosen const &callback) {
+  _themeChoosen = callback;
 }
 
 void Menubar::createMenubar() {
@@ -51,6 +61,9 @@ void Menubar::createViewMenu() {
   auto &menu = _menubar.push_back("View");
   createThemeViewMenu(menu, 0);
   createScaleViewMenu(menu, 1);
+
+  menu.append_splitter();
+  menu.append("Debug", [=](auto &) { _debugChoosen(); });
 }
 
 void Menubar::createThemeViewMenu(nana::menu &menu, size_t const id) {
@@ -120,6 +133,7 @@ void Menubar::createHelpMenu() {
       NULL, "open", "http://github.com/dawikur/c8", NULL, NULL, SW_SHOWNORMAL);
 #endif
 
+  menu.append_splitter();
   menu.append("About", [this](auto &) { showAbout(); });
 }
 
@@ -136,7 +150,7 @@ void Menubar::openFile() {
 
 void Menubar::showAbout() {
   auto msgbox =
-    nana::msgbox{_form, "About c8"}.icon(nana::msgbox::icon_information);
+    nana::msgbox{_form, "c8 - about"}.icon(nana::msgbox::icon_information);
   msgbox << "Chip8 - interpreter";
   msgbox.show();
 }

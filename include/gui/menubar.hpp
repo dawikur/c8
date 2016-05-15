@@ -6,6 +6,7 @@
 #include <functional>
 #include <memory>                                                              // fix for nana
 #include <stdexcept>                                                           // fix for nana
+#include <string>
 #include <vector>                                                              // fix for nana
 
 #include <nana/gui.hpp>
@@ -25,10 +26,11 @@ class Menubar {
  public:
   explicit Menubar(nana::form const &form);
 
-  void fileChoosen(FileChoosen const &callback);
-  void themeChoosen(ThemeChoosen const &callback);
-  void scaleChoosen(ScaleChoosen const &callback);
   void clockChoosen(ClockChoosen const &callback);
+  void debugChoosen(DebugChoosen const &callback);
+  void fileChoosen(FileChoosen const &callback);
+  void scaleChoosen(ScaleChoosen const &callback);
+  void themeChoosen(ThemeChoosen const &callback);
 
  private:
   void createMenubar();
@@ -52,10 +54,11 @@ class Menubar {
     dst->check_style(dst->size() - 1, nana::menu::checks::option);
   }
 
-  FileChoosen _fileChoosen;
-  ThemeChoosen _themeChoosen;
-  ScaleChoosen _scaleChoosen;
   ClockChoosen _clockChoosen;
+  DebugChoosen _debugChoosen;
+  FileChoosen _fileChoosen;
+  ScaleChoosen _scaleChoosen;
+  ThemeChoosen _themeChoosen;
 
   nana::form const &_form;
   nana::menubar _menubar;
