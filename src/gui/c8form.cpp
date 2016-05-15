@@ -51,6 +51,7 @@ void C8form::connectToKeyboardEvents() {
 }
 
 void C8form::connectToDragDropEvents() {
+  enable_dropfiles(true);
   events().mouse_dropfiles([this](nana::arg_dropfiles const &arg) {
     _fileChoosen(arg.files.front());
   });

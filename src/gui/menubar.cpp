@@ -2,6 +2,10 @@
 
 #include "gui/menubar.hpp"
 
+#ifdef _WIN32
+# include <windows.h>
+#endif
+
 #include <nana/gui/filebox.hpp>
 
 namespace gui {
@@ -106,6 +110,16 @@ void Menubar::createClockSettingsMenu(nana::menu &menu) {
 
 void Menubar::createHelpMenu() {
   auto &menu = _menubar.push_back("Help");
+
+#ifdef __linux__
+  menu.append("Home page", [](auto &) {
+    system("xdg-open http://github.com/dawikur/c8"); });
+#elif _WIN32
+  menu.append("Home page", [](auto &) {
+    ::ShellExecute(
+      NULL, "open", "http://github.com/dawikur/c8", NULL, NULL, SW_SHOWNORMAL);
+#endif
+
   menu.append("About", [this](auto &) { showAbout(); });
 }
 

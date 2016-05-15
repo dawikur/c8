@@ -5,7 +5,6 @@
 
 #include <limits>
 #include <random>
-#include <iostream>
 
 #include "type.hpp"
 

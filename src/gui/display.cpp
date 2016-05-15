@@ -3,8 +3,6 @@
 #include "gui/display.hpp"
 #include "hqx/hqx.hpp"
 
-#include <iostream>
-
 namespace gui {
 
 Display::Display(Byte const *const memory,
