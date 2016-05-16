@@ -1,2 +1,2 @@
 cd build
-ctest -VV
+ctest -VV && cd ..
