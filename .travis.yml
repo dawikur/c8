@@ -7,6 +7,10 @@ addons_shortcuts:
     apt:
       sources: [ 'george-edison55-precise-backports','ubuntu-toolchain-r-test', 'llvm-toolchain-precise', 'llvm-toolchain-precise-3.8' ]
       packages: [ 'cmake', 'cmake-data', 'clang-3.8' ]
+  addons_gcc50: &gcc50
+    apt:
+      sources: [ 'george-edison55-precise-backports', 'ubuntu-toolchain-r-test' ]
+      packages: [ 'cmake', 'cmake-data', 'g++-5' ]
 
 matrix:
   include:
@@ -14,6 +18,10 @@ matrix:
       compiler: "clang3.8"
       env: COMPILER=clang++-3.8
       addons: *clang38
+    - os: linux
+      compiler: "gcc5.0"
+      env: COMPILER=g++-5
+      addons: *gcc50
 
 script:
   - ./script/build &&
