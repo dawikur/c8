@@ -18,10 +18,6 @@ matrix:
       compiler: "clang3.8"
       env: COMPILER=clang++-3.8
       addons: *clang38
-    - os: linux
-      compiler: "gcc5.0"
-      env: COMPILER=g++-5
-      addons: *gcc50
 
 script:
   - ./script/build &&
