@@ -129,7 +129,7 @@ void Menubar::createHelpMenu() {
     system("xdg-open http://github.com/dawikur/c8"); });
 #elif _WIN32
   menu.append("Home page", [](auto &) {
-    ::ShellExecute(
+    ::ShellExecuteA(
       NULL, "open", "http://github.com/dawikur/c8", NULL, NULL, SW_SHOWNORMAL);
   });
 #endif
