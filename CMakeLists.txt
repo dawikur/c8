@@ -11,6 +11,7 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR                               #
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")                            # WIN32
   set(warnings "/W4 /WX /EHsc")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
 endif()
 
 find_package(Threads REQUIRED)
