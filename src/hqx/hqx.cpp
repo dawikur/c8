@@ -1,6 +1,9 @@
 // Copyright 2016 Dawid Kurek. All Rights Reserved.
 
+
 #include "hqx/hqx.hpp"
+
+#define DLL_EXPORT
 
 #include <hqx-1.1/src/hqx.h>
 

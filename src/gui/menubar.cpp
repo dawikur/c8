@@ -131,6 +131,7 @@ void Menubar::createHelpMenu() {
   menu.append("Home page", [](auto &) {
     ::ShellExecute(
       NULL, "open", "http://github.com/dawikur/c8", NULL, NULL, SW_SHOWNORMAL);
+  });
 #endif
 
   menu.append_splitter();

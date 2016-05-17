@@ -31,8 +31,8 @@ void Display::draw(nana::paint::graphics &graphics) {
 
   graphics.rectangle(area.getBorder(), false, nana::colors::black);
 
-  for (int y = 0; y < _height; ++y) {
-    for (int x = 0; x < _width; ++x) {
+  for (unsigned y = 0; y < _height; ++y) {
+    for (unsigned x = 0; x < _width; ++x) {
       auto const pos = x + (y * _width);
       auto const bit = data[pos];
 
