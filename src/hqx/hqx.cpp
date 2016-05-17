@@ -1,16 +1,33 @@
 // Copyright 2016 Dawid Kurek. All Rights Reserved.
 
-
 #include "hqx/hqx.hpp"
 
+extern "C" {
 #define DLL_EXPORT
 
 #include <hqx-1.1/src/hqx.h>
 
 #include <hqx-1.1/src/init.c>
 #include <hqx-1.1/src/hq2x.c>
+
+#undef PIXEL00_20
+#undef PIXEL01_10'
+#undef PIXEL01_12'
+#undef PIXEL01_21'
+#undef PIXEL01_60'
+#undef PIXEL01_61'
+#undef PIXEL10_10'
+#undef PIXEL10_11'
+#undef PIXEL10_21'
+#undef PIXEL10_60'
+#undef PIXEL10_61'
+#undef PIXEL11_70
+
 #include <hqx-1.1/src/hq3x.c>
 #include <hqx-1.1/src/hq4x.c>
+
+#undef DLL_EXPORT
+}
 
 #include <vector>
 
@@ -37,8 +54,8 @@ std::vector<uint32_t> const &Hqx::rescale(unsigned const scale) {
 }
 
 void Hqx::convertMemoryToInput() {
-  for (int y = 0; y < _height; ++y) {
-    for (int x = 0; x < _width; ++x) {
+  for (unsigned y = 0; y < _height; ++y) {
+    for (unsigned x = 0; x < _width; ++x) {
       auto const pos = x + (y * _width);
       auto const bit = (_memory[pos / 8] >> (7 - pos % 8)) & 0x01;
       _input[pos] = (bit ? 0x000000FF : 0x00000000);
