@@ -102,7 +102,7 @@ void Chip8::keyEvent(wchar_t const key, Byte const isPressed) {
 
 size_t Chip8::filesize(std::string const& file) {
   std::ifstream in(file, std::ifstream::ate | std::ifstream::binary);
-  return in.tellg();
+  return static_cast<size_t>(in.tellg());
 }
 
 void Chip8::do_one() {
