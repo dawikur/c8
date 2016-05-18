@@ -12,9 +12,9 @@ matrix:
   include:
     - os: linux
       compiler: "clang3.8"
-      env: C_XX=clang++-3.8 CC_=clang-3.8
+      env: C_XX=clang++-3.8
       addons: *clang38
 
 script:
-  - CXX=${C_XX} CC=${CC_} ./script/build &&
+  - CXX=${C_XX} ./script/build &&
     ./script/run_tests
