@@ -9,7 +9,7 @@
 
 class Worker {
  public:
-  Worker(unsigned const clock) : _cycleDuration{}, _running{false}, _thread{} {
+  explicit Worker(unsigned const clock) : _cycleDuration{}, _running{false}, _thread{} {
     setClock(clock);
   }
 

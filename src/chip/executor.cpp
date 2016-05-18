@@ -13,7 +13,7 @@ namespace chip {
 
 Executor::Executor() : _lookupTable {
 #define Operation(id, name)                                                   \
-  [](Opcode const O, Memory &M, GetKey const &getKey)
+  [](Opcode const &O, Memory &M, GetKey const &getKey)
 #define Switch(id, ww, body) Operation(id, id) { switch (O. ww ) { body } }
 #define Case(cc, name, body) case cc : { body ; } ; break
 
@@ -100,7 +100,7 @@ Executor::Executor() : _lookupTable {
 
 } {}
 
-void Executor::operator()(Opcode const opcode,
+void Executor::operator()(Opcode const &opcode,
                           Memory &memory,
                           GetKey const &getKey) {
   _lookupTable[opcode.id](opcode, memory, getKey);

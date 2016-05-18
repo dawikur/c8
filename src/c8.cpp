@@ -11,16 +11,15 @@
 #endif
 
 int main(int argc, char *argv[]) {
-	
+
 #ifdef _WIN32
   ::FreeConsole();
 #endif
-	
+
   try {
     chip::Chip8 chip8;
     gui::C8form form{chip8.getDisplay()};
 
-    //chip8.getKey();
     form.fileChoosen(chip8.fileChoosenCallback());
     form.clockChoosen(chip8.clockChoosenCallback());
     form.keyEvent(chip8.keyEventCallback());
@@ -30,7 +29,7 @@ int main(int argc, char *argv[]) {
     }
 
     form.exec();
-  } catch (std::exception e) {
+  } catch (std::exception &e) {
     std::cout << "[!] " << e.what() << std::endl;
     return 1;
   }
