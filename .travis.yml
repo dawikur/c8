@@ -3,7 +3,7 @@ sudo: false
 language: cpp
 
 addons_shortcuts:
-  addons_clang38: &clang37
+  addons_clang38: &clang38
     apt:
       sources: [ 'george-edison55-precise-backports', 'ubuntu-toolchain-r-test', 'llvm-toolchain-precise', 'llvm-toolchain-precise-3.8' ]
       packages: [ 'cmake', 'cmake-data', 'clang-3.8' ]
