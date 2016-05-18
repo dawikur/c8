@@ -3,10 +3,10 @@ sudo: false
 language: cpp
 
 addons_shortcuts:
-  addons_clang38: &clang38
+  addons_clang38: &clang37
     apt:
-      sources: [ 'george-edison55-precise-backports','ubuntu-toolchain-r-test', 'llvm-toolchain-precise', 'llvm-toolchain-precise-3.8' ]
-      packages: [ 'cmake', 'cmake-data', 'clang-3.8' ]
+      sources: [ 'george-edison55-precise-backports','ubuntu-toolchain-r-test', 'llvm-toolchain-precise', 'llvm-toolchain-precise-3.7' ]
+      packages: [ 'cmake', 'cmake-data', 'clang-3.7' ]
   addons_gcc50: &gcc50
     apt:
       sources: [ 'george-edison55-precise-backports', 'ubuntu-toolchain-r-test' ]
@@ -15,9 +15,9 @@ addons_shortcuts:
 matrix:
   include:
     - os: linux
-      compiler: "clang3.8"
-      env: COMPILER=clang++-3.8
-      addons: *clang38
+      compiler: "clang3.7"
+      env: COMPILER=clang++-3.7
+      addons: *clang37
 
 script:
   - ./script/build &&

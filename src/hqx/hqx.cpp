@@ -2,12 +2,10 @@
 
 #include "hqx/hqx.hpp"
 
-#ifdef _WIN32
 inline uint32_t abs(uint32_t _X)
 {
   return _X;
 }
-#endif
 
 #define DLL_EXPORT
 
