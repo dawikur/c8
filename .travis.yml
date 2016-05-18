@@ -16,5 +16,5 @@ matrix:
       addons: *clang38
 
 script:
-  - CXX=${C_XX} CC=${CC_} ./script/build &&
+  - VERBOSE=1 CXX=${C_XX} CC=${CC_} ./script/build &&
     ./script/run_tests
