@@ -10,6 +10,7 @@ ExternalProject_Add(nana
   CMAKE_ARGS -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG:PATH=DebugLibs
              -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE:PATH=ReleaseLibs
              -DCMAKE_CXX_FLAGS=${MSVC_COMPILER_DEFS}
+             -DCMAKE_CXX_COMPILER_ID=GNU
              -DBUILD_GTEST=ON
   PREFIX "${CMAKE_CURRENT_BINARY_DIR}"
   INSTALL_COMMAND ""                                                           # disable installing
