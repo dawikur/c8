@@ -7,8 +7,8 @@ fi
 cd build || exit 1
 
 if [ "${1,,}" = "debug" ]; then
-  cmake .. -G"Unix Makefiles" -DCMAKE_CXX_COMPILER_ID=GNU -DCMAKE_BUILD_TYPE=Debug
+  cmake .. -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
 else
-  cmake .. -G"Unix Makefiles" -DCMAKE_CXX_COMPILER_ID=GNU
+  cmake .. -G"Unix Makefiles"
 fi
 make
