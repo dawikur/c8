@@ -11,7 +11,7 @@ Display::Display(Byte const *const memory,
   , _width{Width}
   , _height{Height}
   , _scale{}
-  , _color{}
+  , _color()
   , _hqx{memory, Width, Height}
   , _form{form}
   , _drawer{_form} {

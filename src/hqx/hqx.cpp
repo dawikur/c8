@@ -2,7 +2,13 @@
 
 #include "hqx/hqx.hpp"
 
-extern "C" {
+#ifdef _WIN32
+inline uint32_t abs(uint32_t _X)
+{
+  return _X;
+}
+#endif
+
 #define DLL_EXPORT
 
 #include <hqx-1.1/src/hqx.h>
@@ -11,23 +17,22 @@ extern "C" {
 #include <hqx-1.1/src/hq2x.c>
 
 #undef PIXEL00_20
-#undef PIXEL01_10'
-#undef PIXEL01_12'
-#undef PIXEL01_21'
-#undef PIXEL01_60'
-#undef PIXEL01_61'
-#undef PIXEL10_10'
-#undef PIXEL10_11'
-#undef PIXEL10_21'
-#undef PIXEL10_60'
-#undef PIXEL10_61'
+#undef PIXEL01_10
+#undef PIXEL01_12
+#undef PIXEL01_21
+#undef PIXEL01_60
+#undef PIXEL01_61
+#undef PIXEL10_10
+#undef PIXEL10_11
+#undef PIXEL10_21
+#undef PIXEL10_60
+#undef PIXEL10_61
 #undef PIXEL11_70
 
 #include <hqx-1.1/src/hq3x.c>
 #include <hqx-1.1/src/hq4x.c>
 
 #undef DLL_EXPORT
-}
 
 #include <vector>
 
