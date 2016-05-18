@@ -6,8 +6,7 @@ file(GLOB TEST_SRC_FILES *.cpp)
 
 include_directories(${GTEST_INCLUDE_DIRS})
 
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR
-    "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+if(NOT WIN32)
   set(warnings "-Wno-missing-field-initializers")
 endif()
 
