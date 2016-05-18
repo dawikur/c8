@@ -6,7 +6,16 @@
 #include "chip/chip8.hpp"
 #include "gui/c8form.hpp"
 
+#ifdef _WIN32
+# include <Windows.h>
+#endif
+
 int main(int argc, char *argv[]) {
+	
+#ifdef _WIN32
+  ::FreeConsole();
+#endif
+	
   try {
     chip::Chip8 chip8;
     gui::C8form form{chip8.getDisplay()};

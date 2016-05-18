@@ -4,10 +4,19 @@
 
 #include <string>
 
+#include <nana/paint/image.hpp>
+
 namespace gui {
+	
+IconInit::IconInit() {
+#ifdef _WIN32
+  nana::API::window_icon_default(nana::paint::image{"c8.exe"});
+#endif
+}
 
 C8form::C8form(Byte const *const display)
-  : nana::form{}
+  : IconInit{}
+  , nana::form{}
   , _fileChoosen{}
   , _keyEvent{}
   , _menubar{*this}

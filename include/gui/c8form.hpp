@@ -20,7 +20,12 @@
 
 namespace gui {
 
-class C8form : public nana::form {
+class IconInit {
+  public:
+    IconInit();
+};
+
+class C8form : public IconInit, public nana::form {
  public:
   explicit C8form(Byte const *const display);
 
