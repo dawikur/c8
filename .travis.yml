@@ -20,5 +20,5 @@ matrix:
       addons: *clang37
 
 script:
-  - ./script/build &&
+  - CXX=${COMPILER} ./script/build &&
     ./script/run_tests
