@@ -52,7 +52,7 @@ void Menubar::createMenubar() {
 
 void Menubar::createFileMenu() {
   auto &menu = _menubar.push_back("File");
-  menu.append("Open", [this](auto &) { openFile(); });
+  menu.append("Open", [this](auto &) { this->openFile(); });
   menu.append_splitter();
   menu.append("Exit", [](auto &) { nana::API::exit(); });
 }
@@ -135,7 +135,7 @@ void Menubar::createHelpMenu() {
 #endif
 
   menu.append_splitter();
-  menu.append("About", [this](auto &) { showAbout(); });
+  menu.append("About", [this](auto &) { this->showAbout(); });
 }
 
 void Menubar::openFile() {
