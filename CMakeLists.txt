@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 
+option(TESTS "Build only tests" OFF)
+
 set(PROJECT_NAME_STR c8)
 project(${PROJECT_NAME_STR} C CXX)
 
@@ -19,4 +21,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 
 add_subdirectory(${PROJECT_SOURCE_DIR}/thirdparty)
 add_subdirectory(${PROJECT_SOURCE_DIR}/test)
-add_subdirectory(${PROJECT_SOURCE_DIR}/src)
+
+if(NOT TESTS)
+  add_subdirectory(${PROJECT_SOURCE_DIR}/src)
+endif()

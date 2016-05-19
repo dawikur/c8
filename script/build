@@ -6,7 +6,9 @@ fi
 
 cd build || exit 1
 
-if [ "${1,,}" = "debug" ]; then
+if [ "${1,,}" = "tests" ]; then
+  cmake .. -G"Unix Makefiles" -DTESTS=ON
+elif [ "${1,,}" = "debug" ]; then
   cmake .. -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
 else
   cmake .. -G"Unix Makefiles"

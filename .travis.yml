@@ -15,5 +15,5 @@ env:
   - CXX=clang++-3.8
 
 script:
-  - VERBOSE=1 ./script/build &&
+  - ./script/build tests &&
     ./script/run_tests
