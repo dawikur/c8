@@ -37,23 +37,33 @@ inline uint32_t abs(uint32_t _X)
 Hqx::Hqx(Byte const *const memory, unsigned const width, unsigned const height)
   : _input(width * height)
   , _output(width * 4 * height * 4)
+  , _scale(1)
   , _memory{memory}
   , _width{width}
   , _height{height} {
   hqxInit();
 }
 
-std::vector<uint32_t> const &Hqx::rescale(unsigned const scale) {
+Hqx::Buffer const &Hqx::operator()() const {
+  if (_scale == 1) {
+    return _input;
+  }
+  return _output;
+}
+
+void Hqx::rescale(unsigned const scale) {
   convertMemoryToInput();
 
   switch (scale) {
-    case 1: return _input;
+    case 1: break;
     case 2: hq2x_32(_input.data(), _output.data(), _width, _height); break;
     case 3: hq3x_32(_input.data(), _output.data(), _width, _height); break;
     case 4: hq4x_32(_input.data(), _output.data(), _width, _height); break;
+
+    default: return;
   }
 
-  return _output;
+  _scale = scale;
 }
 
 void Hqx::convertMemoryToInput() {

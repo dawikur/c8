@@ -22,12 +22,13 @@ Display::Display(Byte const *const memory,
 }
 
 void Display::do_one() {
+  _hqx.rescale(_scale);
   _drawer.update();
 }
 
 void Display::draw(nana::paint::graphics &graphics) {
   auto const area = getArea();
-  auto const& data = _hqx.rescale(_scale);
+  auto const& data = _hqx();
 
   graphics.rectangle(area.getBorder(), false, nana::colors::black);
 

@@ -13,13 +13,15 @@ class Hqx {
 
   Hqx(Byte const * const memory, unsigned const width, unsigned const height);
 
-  Buffer const &rescale(unsigned const scale);
+  void rescale(unsigned const scale);
+  Buffer const &operator()() const;
 
  private:
   void convertMemoryToInput();
 
   Buffer _input;
   Buffer _output;
+  unsigned _scale;
 
   Byte const * const _memory;
   unsigned const _width;
