@@ -7,11 +7,13 @@ enable_testing()
 
 if(NOT WIN32)
   set(warnings "-Wall -Wextra -Werror -Wpedantic")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -fno-rtti")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti")
 else()
   set(warnings "/W4 /WX")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc /GR-")
 endif()
+
+set_property(TARGET ${PROJECT_NAME_STR} PROPERTY CXX_STANDARD 11)
 
 find_package(Threads REQUIRED)
 
