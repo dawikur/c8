@@ -6,13 +6,18 @@ addons:
  apt:
    sources:
    - ubuntu-toolchain-r-test
-   - llvm-toolchain-precise-3.8
    packages:
-   - clang-3.8
+   - gcc-5.0
 
 env:
-  - CC=clang-3.8 CXX=clang++-3.8
+  - CC=gcc-5 CXX=g++-5
+
+before_script:
+    - pip install --user cpp-coveralls
 
 script:
   - ./script/build tests &&
     ./script/run_tests
+
+after_success:
+    - coveralls --gcov gcov-5 --gcov-options '\-lp' --include Source --exclude Source/UI
