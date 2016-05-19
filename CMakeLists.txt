@@ -13,7 +13,7 @@ else()
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc /GR-")
 endif()
 
-set_property(TARGET ${PROJECT_NAME_STR} PROPERTY CXX_STANDARD 11)
+set_property(TARGET ${PROJECT_NAME_STR} PROPERTY CXX_STANDARD 14)
 
 find_package(Threads REQUIRED)
 
@@ -22,4 +22,3 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 add_subdirectory(${PROJECT_SOURCE_DIR}/thirdparty)
 add_subdirectory(${PROJECT_SOURCE_DIR}/test)
 add_subdirectory(${PROJECT_SOURCE_DIR}/src)
-
