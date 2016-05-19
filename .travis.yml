@@ -3,21 +3,16 @@ sudo: false
 language: generic
 
 addons:
- apt:
-   sources:
-     - ubuntu-toolchain-r-test
-   packages:
-     - g++-5
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+      - llvm-toolchain-precise-3.8
+    packages:
+      - clang-3.8
 
 env:
-  - CC=gcc-5 CXX=g++-5
-
-before_script:
-  - pip install --user cpp-coveralls
+  - CC=clang-3.8 CXX=clang++-3.8
 
 script:
   - ./script/build tests &&
     ./script/run_tests
-
-after_success:
-  - coveralls --gcov gcov-5 --gcov-options '\-lp' --include src --exclude src/gui
