@@ -5,19 +5,19 @@ language: generic
 addons:
  apt:
    sources:
-   - ubuntu-toolchain-r-test
+     - ubuntu-toolchain-r-test
    packages:
-   - gcc-5.0
+     - g++-5.0
 
 env:
   - CC=gcc-5 CXX=g++-5
 
 before_script:
-    - pip install --user cpp-coveralls
+  - pip install --user cpp-coveralls
 
 script:
   - ./script/build tests &&
     ./script/run_tests
 
 after_success:
-    - coveralls --gcov gcov-5 --gcov-options '\-lp' --include Source --exclude Source/UI
+  - coveralls --gcov gcov-5 --gcov-options '\-lp' --include src --exclude src/gui
