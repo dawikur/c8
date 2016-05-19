@@ -1,15 +1,19 @@
 sudo: false
 
-language: cpp
-compiler: gcc
+language: generic
 
 addons:
  apt:
    sources:
+   - ubuntu-toolchain-r-test
    - llvm-toolchain-precise-3.8
    packages:
    - clang-3.8
 
+env:
+  - CC=clang-3.8
+  - CXX=clang++-3.8
+
 script:
-  - VERBOSE=1 CXX=${CPP} ./script/build &&
+  - VERBOSE=1 ./script/build &&
     ./script/run_tests
