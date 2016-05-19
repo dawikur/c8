@@ -6,10 +6,9 @@ compiler: gcc
 addons:
  apt:
    sources:
-   - ubuntu-toolchain-r-test
+   - llvm-toolchain-precise-3.8
    packages:
-   - gcc-5.0
-   - g++-5.0
+   - clang-3.8
 
 script:
   - VERBOSE=1 CXX=${CPP} ./script/build &&
