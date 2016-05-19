@@ -2,19 +2,17 @@ sudo: false
 
 language: cpp
 
-addons_shortcuts:
-  addons_clang38: &clang38
-    apt:
-      sources: [ 'george-edison55-precise-backports', 'ubuntu-toolchain-r-test', 'llvm-toolchain-precise', 'llvm-toolchain-precise-3.8' ]
-      packages: [ 'cmake', 'cmake-data', 'clang-3.8' ]
-
 matrix:
   include:
-    - os: linux
-      compiler: "clang3.8"
-      env: C_XX=clang++-3.8 CC_=clang-3.8
-      addons: *clang38
+    - compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5.2
+      env: CPP=g++-5.2
 
 script:
-  - VERBOSE=1 CXX=${C_XX} CC=${CC_} ./script/build &&
+  - VERBOSE=1 CXX=${CPP} ./script/build &&
     ./script/run_tests
