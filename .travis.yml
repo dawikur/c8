@@ -1,17 +1,15 @@
 sudo: false
 
 language: cpp
+compiler gcc
 
-matrix:
-  include:
-    - compiler: gcc
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-5.2
-      env: CPP=g++-5.2
+addons:
+ apt:
+   sources:
+   - ubuntu-toolchain-r-test
+   packages:
+   - gcc-5.0
+   - g++-5.0
 
 script:
   - VERBOSE=1 CXX=${CPP} ./script/build &&
