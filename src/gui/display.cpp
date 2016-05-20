@@ -11,6 +11,7 @@ Display::Display(Byte const *const memory,
   , _width{Width}
   , _height{Height}
   , _scale{}
+  , _isUpdateNeeded{true}
   , _color()
   , _hqx{memory, Width, Height}
   , _form{form}
@@ -22,7 +23,10 @@ Display::Display(Byte const *const memory,
 }
 
 void Display::do_one() {
-  _hqx.rescale(_scale);
+  if (_isUpdateNeeded) {
+    _hqx.rescale(_scale);
+    _isUpdateNeeded = false;
+  }
   _drawer.update();
 }
 
@@ -57,6 +61,10 @@ void Display::scale(unsigned const scale) {
   _scale = scale;
   _width = Width * scale;
   _height = Height * scale;
+}
+
+UpdateDisplay Display::updateCallback() {
+  return [this]() { _isUpdateNeeded = true; };
 }
 
 Display::Area Display::getArea() const {

@@ -17,6 +17,7 @@ class Chip8 : public Worker {
   explicit Chip8(unsigned const clock = 256);
 
   void getKey(GetKey const &callback);
+  void updateDisplay(UpdateDisplay const &callback);
 
   FileChoosen fileChoosenCallback();
   ClockChoosen clockChoosenCallback();
@@ -38,6 +39,7 @@ class Chip8 : public Worker {
   Memory _memory;
   Executor _execute;
   GetKey _getKey;
+  UpdateDisplay _updateDisplay;
 };
 
 }  // namespace chip

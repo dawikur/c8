@@ -16,12 +16,20 @@
 namespace chip {
 
 Chip8::Chip8(unsigned const clock)
-  : Worker{clock}, _memory{}, _execute{}, _getKey{[]() { return 0; }} {
+  : Worker{clock}
+  , _memory{}
+  , _execute{}
+  , _getKey{[]() { return 0; }}
+  , _updateDisplay{} {
   initFont();
 }
 
 void Chip8::getKey(GetKey const &callback) {
   _getKey = callback;
+}
+
+void Chip8::updateDisplay(UpdateDisplay const &callback) {
+  _updateDisplay = callback;
 }
 
 FileChoosen Chip8::fileChoosenCallback() {
@@ -79,7 +87,7 @@ void Chip8::load(std::string const &file) {
     _memory.Raw[position++] = input.get();
   }
 
-  _execute(Opcode{0x00E0}, _memory, _getKey);
+  _execute(Opcode{0x00E0}, _memory, _getKey, _updateDisplay);
   _memory.PC = 0x200;
 
   start();
@@ -107,7 +115,7 @@ size_t Chip8::filesize(std::string const& file) {
 
 void Chip8::do_one() {
   auto const opcode = fetch();
-  _execute(Opcode{opcode}, _memory, _getKey);
+  _execute(Opcode{opcode}, _memory, _getKey, _updateDisplay);
   tick();
 }
 

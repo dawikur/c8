@@ -12,8 +12,8 @@
 namespace chip {
 
 Executor::Executor() : _lookupTable {
-#define Operation(id, name)                                                   \
-  [](Opcode const &O, Memory &M, GetKey const &getKey)
+#define Operation(id, name)                                                    \
+  [](Opcode const &O, Memory &M, GetKey const &getKey, UpdateDisplay& updateDisplay)
 #define Switch(id, ww, body) Operation(id, id) { switch (O. ww ) { body } }
 #define Case(cc, name, body) case cc : { body ; } ; break
 
@@ -68,6 +68,8 @@ Executor::Executor() : _lookupTable {
            |  put( ((x+7)%64 + (y+p)%32 * 64) / 8, M.Raw[M.I+p] << (8 - x%8) );
     }
     M.V[0xF] = (kk != 0);
+
+    updateDisplay();
   },
   Switch   (E, kk,   {
     Case(0x9E, SKP,    if ( M.Keypad[M.V[O.x]]) { M.PC += 2; }     );
@@ -102,8 +104,9 @@ Executor::Executor() : _lookupTable {
 
 void Executor::operator()(Opcode const &opcode,
                           Memory &memory,
-                          GetKey const &getKey) {
-  _lookupTable[opcode.id](opcode, memory, getKey);
+                          GetKey const &getKey,
+                          UpdateDisplay &updateDisplay) {
+  _lookupTable[opcode.id](opcode, memory, getKey, updateDisplay);
 }
 
 }  // namespace chip

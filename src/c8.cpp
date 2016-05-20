@@ -24,6 +24,8 @@ int main(int argc, char *argv[]) {
     form.clockChoosen(chip8.clockChoosenCallback());
     form.keyEvent(chip8.keyEventCallback());
 
+    chip8.updateDisplay(form.updateDisplayCallback());
+
     if (argc > 1) {
       chip8.fileChoosenCallback()(argv[1]);
     }

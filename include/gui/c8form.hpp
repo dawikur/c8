@@ -35,6 +35,8 @@ class C8form : public IconInit, public nana::form {
   void clockChoosen(ClockChoosen const &callback);
   void keyEvent(KeyEvent const &callback);
 
+  UpdateDisplay updateDisplayCallback();
+
  private:
   void createMenubar();
 

@@ -11,9 +11,10 @@
 #include <nana/gui.hpp>
 #include <nana/gui/widgets/form.hpp>
 
+#include "callbacks.hpp"
+#include "hqx/hqx.hpp"
 #include "type.hpp"
 #include "worker.hpp"
-#include "hqx/hqx.hpp"
 
 namespace gui {
 
@@ -24,6 +25,8 @@ class Display : public Worker {
 
   void theme(nana::color const fg, nana::color const bg);
   void scale(unsigned const);
+
+  UpdateDisplay updateCallback();
 
  private:
   void do_one() override;
@@ -44,10 +47,11 @@ class Display : public Worker {
 
   unsigned _width;
   unsigned _height;
-  unsigned _scale;
+  std::atomic<unsigned> _scale;
+  std::atomic_bool _isUpdateNeeded;
 
   struct {
-    nana::color operator()(Byte const bit) { return bit ? fg : bg; };
+    nana::color operator()(Byte const bit) { return bit ? fg : bg; }
     std::atomic<nana::color> fg, bg;
   } _color;
 

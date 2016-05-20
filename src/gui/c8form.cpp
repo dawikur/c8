@@ -7,7 +7,7 @@
 #include <nana/paint/image.hpp>
 
 namespace gui {
-	
+
 IconInit::IconInit() {
 #ifdef _WIN32
   nana::API::window_icon_default(nana::paint::image{"c8.exe"});
@@ -51,6 +51,10 @@ void C8form::clockChoosen(ClockChoosen const &callback) {
 
 void C8form::keyEvent(KeyEvent const &callback) {
   _keyEvent = callback;
+}
+
+UpdateDisplay C8form::updateDisplayCallback() {
+  return _display.updateCallback();
 }
 
 void C8form::connectToKeyboardEvents() {
