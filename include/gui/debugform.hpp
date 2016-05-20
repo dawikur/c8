@@ -8,6 +8,10 @@
 #include <vector>                                                              // fix dor nana
 
 #include <nana/gui/widgets/form.hpp>
+#include <nana/gui/widgets/listbox.hpp>
+#include <nana/gui/place.hpp>
+
+#include "gui/group.hpp"
 
 namespace gui {
 
@@ -19,6 +23,11 @@ class Debugform : public nana::form {
 
  private:
   void arrange();
+
+  nana::place _place;
+
+  nana::listbox _opcodes;
+  Group _registers;
 };
 
 }  // namespace gui
