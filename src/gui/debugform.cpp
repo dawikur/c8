@@ -19,7 +19,7 @@ void Debugform::run() {
 void Debugform::arrange() {
   _place.div(
     "<margin=10 gap=10 vertical <horizontal debug> <weight=50 horizontal <> "
-    "<margin=10 gap=10 weight=500 horizontal control> > >");
+    "<margin=10 gap=10 weight=500 horizontal control> <> > >");
 
   _opcodes.append_header("Addr");
   _opcodes.append_header("Hex");
