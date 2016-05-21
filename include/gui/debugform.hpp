@@ -7,6 +7,7 @@
 #include <stdexcept>                                                           // fix for nana
 #include <vector>                                                              // fix dor nana
 
+#include <nana/gui/widgets/button.hpp>
 #include <nana/gui/widgets/form.hpp>
 #include <nana/gui/widgets/listbox.hpp>
 #include <nana/gui/place.hpp>
@@ -28,6 +29,16 @@ class Debugform : public nana::form {
 
   nana::listbox _opcodes;
   Group _registers;
+
+  struct Buttons {
+    Buttons(nana::widget &owner)
+      : _continue{owner}, _pause{owner}, _step{owner}, _stop{owner} {}
+
+    nana::button _continue;
+    nana::button _pause;
+    nana::button _step;
+    nana::button _stop;
+  } _buttons;
 };
 
 }  // namespace gui
