@@ -62,8 +62,9 @@ void Menubar::createViewMenu() {
   createThemeViewMenu(menu, 0);
   createScaleViewMenu(menu, 1);
 
-  menu.append_splitter();
-  menu.append("Debug", [=](auto &) { _debugChoosen(); });
+  // Disabled for now
+  //menu.append_splitter();
+  //menu.append("Debug", [=](auto &) { _debugChoosen(); });
 }
 
 void Menubar::createThemeViewMenu(nana::menu &menu, size_t const id) {
