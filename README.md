@@ -1,4 +1,4 @@
-<img src="./res/8ball.png" width="192"  align="left" />
+<img src="./res/8ball.png" width="212"  align="left" />
 # c8
 > Chip8 - interpreter
 
