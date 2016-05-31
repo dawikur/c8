@@ -25,9 +25,9 @@ Display::Display(Byte const *const memory,
 void Display::do_one() {
   if (_isUpdateNeeded) {
     _hqx.rescale(_scale);
+    _drawer.update();
     _isUpdateNeeded = false;
   }
-  _drawer.update();
 }
 
 void Display::draw(nana::paint::graphics &graphics) {
@@ -61,6 +61,7 @@ void Display::scale(unsigned const scale) {
   _scale = scale;
   _width = Width * scale;
   _height = Height * scale;
+  _isUpdateNeeded = true;
 }
 
 UpdateDisplay Display::updateCallback() {
