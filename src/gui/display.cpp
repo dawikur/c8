@@ -55,6 +55,7 @@ void Display::draw(nana::paint::graphics &graphics) {
 void Display::theme(nana::color const fg, nana::color const bg) {
   _color.fg = fg;
   _color.bg = bg;
+  _isUpdateNeeded = true;
 }
 
 void Display::scale(unsigned const scale) {
