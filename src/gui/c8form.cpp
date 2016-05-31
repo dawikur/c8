@@ -25,7 +25,7 @@ C8form::C8form(Byte const *const display)
   caption("c8");
   bgcolor(nana::colors::white);
   
-  events().unload(nana::API::exit)
+  events().unload(nana::API::exit);
 
   connectToKeyboardEvents();
   connectToDragDropEvents();
